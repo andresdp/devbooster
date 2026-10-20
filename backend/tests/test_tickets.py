@@ -133,6 +133,12 @@ def test_blank_or_null_assignee_is_unassigned(client, board, assignee):
     assert ticket["assignee"] is None
 
 
+def test_create_on_huge_board_id_is_404_not_a_crash(client):
+    response = client.post(f"{API}/boards/99999999999999999999/tickets", json={"title": "t"})
+    assert response.status_code == 404
+    assert response.json()["error"]["code"] == "not_found"
+
+
 def test_create_on_unknown_board_is_404(client):
     response = client.post(f"{API}/boards/999/tickets", json={"title": "t"})
     assert response.status_code == 404

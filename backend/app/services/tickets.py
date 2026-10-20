@@ -7,14 +7,13 @@ from app.models._types import utcnow
 from app.schemas import TicketCreate, TicketUpdate
 from app.services.boards import get_board
 from app.services.history import record_change
-
-SQLITE_MAX_ID = 2**63 - 1
+from app.services.ids import in_id_range
 
 
 def parse_key(key: str) -> int:
     """Turn a well-formed `TKT-<n>` key into a ticket id (the router validates the shape)."""
     ticket_id = int(key.removeprefix("TKT-"))
-    if ticket_id > SQLITE_MAX_ID:
+    if not in_id_range(ticket_id):
         raise NotFoundError(f"Ticket {key} not found")
     return ticket_id
 

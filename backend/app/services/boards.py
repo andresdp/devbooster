@@ -7,6 +7,7 @@ from app.db import begin_write
 from app.errors import ConflictError, NotFoundError
 from app.models import DEFAULT_COLUMN_NAMES, Board, Column, Ticket
 from app.schemas import BoardCreate
+from app.services.ids import in_id_range
 
 
 def create_board(session: Session, data: BoardCreate) -> tuple[Board, list[Column]]:
@@ -37,7 +38,7 @@ def list_boards(session: Session) -> list[Board]:
 
 
 def get_board(session: Session, board_id: int) -> Board:
-    board = session.get(Board, board_id)
+    board = session.get(Board, board_id) if in_id_range(board_id) else None
     if board is None:
         raise NotFoundError(f"Board {board_id} not found")
     return board

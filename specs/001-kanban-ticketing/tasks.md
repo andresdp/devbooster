@@ -223,3 +223,10 @@ Task: "Implement backend/app/schemas/board.py and backend/app/schemas/ticket.py"
 - The creation history entry is written by US1's `create_ticket` (FR-017) but is only exposed and verified through US3's history endpoint
 - The generated `openapi.json` is committed and guarded by `test_contract.py`; refresh it whenever the API changes
 - Commit after each task or logical group
+
+---
+
+## Phase 7: Convergence
+
+- [X] T046 CRITICAL: Generate and commit `specs/001-kanban-ticketing/contracts/openapi.json` for the current US1 API (`uv run python scripts/export_openapi.py`) and add `backend/tests/test_contract.py` that fails when `create_app().openapi()` diverges from it (re-export when US2/US3 routes land) per Constitution II (missing)
+- [X] T047 Make `GET /boards/{board_id}` and `POST /boards/{board_id}/tickets` return 404 `not_found` (not a 500) for a board id beyond SQLite's 64-bit range, reusing the guard `parse_key` applies to ticket ids in `backend/app/services/`, with a failing-first test in `backend/tests/test_boards.py` and `backend/tests/test_tickets.py` per EC-001 and FR-021 (contradicts)

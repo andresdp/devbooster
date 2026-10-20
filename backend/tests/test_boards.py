@@ -78,6 +78,12 @@ def test_unknown_board_is_404(client):
     assert response.json()["error"]["code"] == "not_found"
 
 
+def test_huge_board_id_is_404_not_a_crash(client):
+    response = client.get(f"{API}/boards/99999999999999999999")
+    assert response.status_code == 404
+    assert response.json()["error"]["code"] == "not_found"
+
+
 def test_non_integer_board_id_is_422(client):
     response = client.get(f"{API}/boards/abc")
     assert response.status_code == 422
