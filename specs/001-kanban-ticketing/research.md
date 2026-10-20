@@ -41,7 +41,7 @@ No `NEEDS CLARIFICATION` items remain; the stack was fixed by the user and the c
 ## Input normalization
 
 - **Decision**: Pydantic `field_validator`/`StringConstraints(strip_whitespace=True, min_length=1)` on board name, ticket title, comment text and author; title max 200, description max 10,000. Enums `TicketType` (bug, feature, task) and `Priority` (low, medium, high, critical).
-- **Rationale**: Matches clarifications (trim then reject empty) and assumptions. Case-insensitive board-name uniqueness checked in the service using `lower(name)` and backed by a unique index on a normalized `name_key` column to survive races.
+- **Rationale**: Matches clarifications (trim then reject empty) and assumptions. Case-insensitive board-name uniqueness checked in the service using `casefold()` of the trimmed name and backed by a unique index on a normalized `name_key` column to survive races.
 - **Alternatives**: DB collation `NOCASE` unique (works but hides the rule from code and tests).
 
 ## CORS

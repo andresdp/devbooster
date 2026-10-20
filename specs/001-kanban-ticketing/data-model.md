@@ -7,8 +7,8 @@ All tables are SQLModel models in SQLite. Timestamps are UTC, stored as timezone
 | Field | Type | Rules |
 |-------|------|-------|
 | id | int, PK | |
-| name | str | Trimmed, non-empty, max 100 |
-| name_key | str, unique | `name.lower()`; enforces case-insensitive uniqueness (FR-001) |
+| name | str | Trimmed, non-empty, max 100 (Unicode code points) |
+| name_key | str, unique | `name.casefold()` of the trimmed name (Unicode case folding, no other normalization); enforces case-insensitive uniqueness (FR-001) |
 | created_at | datetime | Set on create |
 
 Relations: has 4 `Column`s (created together with the board), many `Ticket`s via columns.
@@ -37,7 +37,7 @@ Relations: holds ordered `Ticket`s.
 | description | str | Trimmed, 0–10,000 chars, default "" |
 | type | enum | `bug` \| `feature` \| `task`, default `task` |
 | priority | enum | `low` \| `medium` \| `high` \| `critical`, default `medium` |
-| assignee | str \| null | Trimmed free text; empty/absent means unassigned (null) |
+| assignee | str \| null | Trimmed free text, max 100; empty/blank/absent means unassigned (null) |
 | created_at / updated_at | datetime | `updated_at` changes on edit and move |
 
 Indexes: `(column_id, position)` for ordered reads.
@@ -73,9 +73,10 @@ Board 1 ── 4 Column 1 ── * Ticket 1 ── * Comment
 
 ## State transitions and invariants
 
-- **Create ticket**: placed at `position = count(first column)`; writes HistoryEntry(from=null, to=first column).
+- **Create ticket**: placed at `position = count(first column)`; writes HistoryEntry(from=null, to=first column). Ticket and history entry are written in one transaction; on failure neither is stored (a rolled-back AUTOINCREMENT id is not consumed, and gaps would be harmless anyway).
 - **Move to a different column** (same board): valid position `0..n` where n = tickets already in the target (default n). Source column is closed up, target shifted, both left gap-free; writes HistoryEntry(from, to).
-- **Reorder in the same column**: valid position `0..n-1`; only positions change; no HistoryEntry (FR-018).
+- **Reorder in the same column**: valid position `0..n-1` (default n-1); only positions change; no HistoryEntry (FR-018). Same position = no-op: no change, `updated_at` untouched. A single-ticket column accepts only 0; an empty target column accepts 0 (or no position).
+- **Concurrency**: move/reorder/create run in write transactions that SQLite serializes (begin immediate); each request validates against the state when it runs, so the gap-free invariant holds under any interleaving.
 - **Invalid move** (other board's column, unknown column, out-of-range position): 422, nothing changes; the whole operation is one transaction.
 - **Edit ticket**: title, description, type, priority, assignee only; same validation as create; never alters key, board, column or position.
 - Invariant: for every column, positions are exactly `0..n-1` with no duplicates after every committed operation.
