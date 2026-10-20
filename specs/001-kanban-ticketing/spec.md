@@ -8,6 +8,14 @@
 
 **Input**: User description: "A kanban-style ticketing system for software teams. A board has columns (default: To Do, In Progress, Review, Done). A ticket has a title, description, type (bug, feature, task), priority, assignee and a human-readable key like TKT-12. P1: create boards and tickets, and view them grouped by column. P2: move tickets between columns and reorder them within a column. P3: comments on tickets and a history of status changes. Out of scope: authentication, notifications, attachments, real-time updates."
 
+## Clarifications
+
+### Session 2026-10-20
+
+- Q: Should ticket positions be counted from 0 or from 1? → A: Zero-based (top = 0)
+- Q: Which ticket fields are required at creation? → A: Only the title; defaults are type = task, priority = medium, description = empty, assignee = unassigned
+- Q: Does whitespace-only text count as empty? → A: Yes; surrounding whitespace is trimmed and values empty after trimming are rejected
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Create boards and tickets, view them by column (Priority: P1)
@@ -21,7 +29,7 @@ A team member creates a board for their project and adds tickets to it. Each tic
 **Acceptance Scenarios**:
 
 1. **Given** no boards exist, **When** a user creates a board with a name, **Then** the board exists with the four default columns (To Do, In Progress, Review, Done) in that order and is empty.
-2. **Given** an existing board, **When** a user creates a ticket with a title, type and priority, **Then** the ticket is placed in the first column (To Do) and is assigned a unique human-readable key such as TKT-1.
+2. **Given** an existing board, **When** a user creates a ticket with at least a title, **Then** the ticket is placed in the first column (To Do) and is assigned a unique human-readable key such as TKT-1.
 3. **Given** several tickets have been created, **When** a user creates another, **Then** its key is the next number in sequence and never repeats or reuses an earlier key.
 4. **Given** a board with tickets in different columns, **When** a user views the board, **Then** tickets are shown grouped by column, in column order, with each ticket's key, title, type, priority and assignee visible.
 5. **Given** a user submits a ticket without a title, or with a type outside bug/feature/task, **When** they try to create it, **Then** the request is rejected with a clear error and no ticket is created.
@@ -83,7 +91,7 @@ A team member adds comments to a ticket to discuss it, and can see a history of 
 - **FR-001**: System MUST allow users to create a board with a name, and MUST reject empty or duplicate board names.
 - **FR-002**: System MUST create every new board with the default columns To Do, In Progress, Review and Done, in that order.
 - **FR-003**: System MUST allow users to list boards and retrieve a single board.
-- **FR-004**: System MUST allow users to create a ticket on a board with a title, description, type, priority and optional assignee.
+- **FR-004**: System MUST allow users to create a ticket on a board with a title (required) and optional description, type, priority and assignee. When omitted, type defaults to task, priority to medium, description to empty and assignee to unassigned.
 - **FR-005**: System MUST restrict ticket type to bug, feature or task, and priority to a fixed set of levels (low, medium, high, critical), rejecting other values.
 - **FR-006**: System MUST require a non-empty title for every ticket and reject tickets without one.
 - **FR-007**: System MUST assign each ticket a unique, human-readable key of the form TKT-<number>, with numbers increasing in creation order; a key MUST never change or be reused.
@@ -91,8 +99,8 @@ A team member adds comments to a ticket to discuss it, and can see a history of 
 - **FR-009**: System MUST let users view a board with its tickets grouped by column, with columns in board order and tickets in their column order.
 - **FR-010**: System MUST let users retrieve a single ticket by its key, including all of its details.
 - **FR-011**: System MUST let users edit a ticket's title, description, type, priority and assignee, applying the same validation as at creation.
-- **FR-012**: System MUST let users move a ticket to any column of the same board at an optional position, defaulting to the bottom of the target column.
-- **FR-013**: System MUST let users reorder a ticket within its current column by specifying a new position.
+- **FR-012**: System MUST let users move a ticket to any column of the same board at an optional position, defaulting to the bottom of the target column. Positions are zero-based (top = 0); for a different column the valid range is 0 to the number of tickets already in it (the upper bound appends at the bottom).
+- **FR-013**: System MUST let users reorder a ticket within its current column by specifying a new zero-based position, valid from 0 to the number of tickets in the column minus 1.
 - **FR-014**: System MUST keep ticket order within each column consistent and gap-free after any move or reorder, and MUST persist it.
 - **FR-015**: System MUST reject moves to columns of a different board or to positions outside the valid range, leaving state unchanged.
 - **FR-016**: System MUST let users add a comment (non-empty text and author name) to a ticket and list a ticket's comments in chronological order.
@@ -132,3 +140,4 @@ A team member adds comments to a ticket to discuss it, and can see a history of 
 - Deleting boards, tickets or comments, and editing or deleting comments, are not part of this feature.
 - Title length limit of 200 characters and description limit of 10,000 characters are assumed.
 - Board names are unique, compared case-insensitively.
+- For board names, ticket titles, comment text and author names, leading and trailing whitespace is trimmed before validation and storage; a value that is empty after trimming is treated as empty and rejected.
