@@ -41,17 +41,19 @@ Backend-only feature. All code lives under `backend/` (own uv project), all path
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
+**Test-first order (constitution IV)**: T011 and T012 are written and confirmed FAILING before the code they cover (T006, T009) is implemented. `conftest.py` (T010) is test support, not covered code.
+
+- [ ] T011 [P] Write `backend/tests/test_errors.py` (written and run Red BEFORE T006/T009; it fails because `app.errors`/`app.main` do not exist yet): the uniform body shape for 404, 409, 422 `validation_error` (with `details` naming the field) and 422 `invalid_move`; invalid JSON body and unknown fields → 422 `validation_error`; unsupported method (e.g. `DELETE /api/v1/boards/1`) → 405 `http_error` in the same body; an unexpected exception (register a throwaway route raising `RuntimeError("secret db detail")` on a test app) → 500 `internal_error` with generic message and no traceback or the secret text in the body
+- [ ] T012 [P] Write `backend/tests/test_cors.py` (written and run Red BEFORE T009; it fails because `app.main` does not exist yet): a request with `Origin: http://localhost:5173` gets `Access-Control-Allow-Origin: http://localhost:5173`; a preflight `OPTIONS` from that origin succeeds; `Origin: http://evil.example` gets no allow-origin header; `CORS_ORIGINS` override with two origins allows both
 - [ ] T005 [P] Implement `backend/app/config.py`: settings read from env, `DATABASE_URL` (default `sqlite:///backend/kanban.db` resolved so it works from `backend/` too) and `CORS_ORIGINS` (comma-separated, default `http://localhost:5173`, no wildcard)
 - [ ] T006 [P] Implement `backend/app/errors.py`: `ErrorResponse` Pydantic model `{error: {code, message, details: [{field, message}] | null}}`; `AppError` base plus `NotFoundError` (404 `not_found`), `ConflictError` (409 `conflict`), `InvalidMoveError` (422 `invalid_move`); `register_exception_handlers(app)` overriding `RequestValidationError` (422 `validation_error`, `details` = one `{field, message}` per error, including invalid-JSON bodies), Starlette `HTTPException` (`http_error`, status preserved, e.g. 405) and a catch-all `Exception` handler (500 `internal_error`, generic message, no stack trace or DB text); export a `ERROR_RESPONSES` dict for use in router `responses=`
 - [ ] T007 [P] Implement SQLModel table models in `backend/app/models/` exactly per data-model.md: `board.py` (`Board`: `name` max 100, unique `name_key`, `created_at`), `column.py` (`Column`: `board_id`, `name`, `position`, unique `(board_id, position)`), `ticket.py` (`Ticket`: integer PK with `sqlite_autoincrement=True`, `board_id`, `column_id`, `position`, `title` 1–200, `description` 0–10,000 default "", `type` enum bug|feature|task default task, `priority` enum low|medium|high|critical default medium, `assignee` str|null max 100, `created_at`, `updated_at`; index `(column_id, position)`; no stored key), `comment.py` (`Comment`: `ticket_id`, `author` max 100, `text` max 5,000, `created_at`), `history.py` (`HistoryEntry`: `ticket_id`, `from_column_id` nullable, `to_column_id`, `changed_at`); export `TicketType` and `Priority` enums from `ticket.py`; all datetimes UTC with sub-second precision; re-export all in `backend/app/models/__init__.py`
 - [ ] T008 Implement `backend/app/db.py` (depends on T005, T007): engine factory with `check_same_thread=False`, `PRAGMA foreign_keys=ON`, `PRAGMA journal_mode=WAL` and `PRAGMA synchronous=FULL` (FR-020 durability) per connection, a `begin immediate` write-transaction helper so concurrent create/move are serialized (EC-002, EC-012), `create_db_and_tables(engine)` using `SQLModel.metadata.create_all`, and a `get_session` FastAPI dependency
 - [ ] T009 Implement `backend/app/main.py` (depends on T005, T006, T008): `create_app()` factory with title/version, `CORSMiddleware` (origins from settings, explicit methods `GET,POST,PATCH,OPTIONS` and headers `Content-Type`, no wildcard), `register_exception_handlers`, a lifespan that calls `create_db_and_tables` (seeding is hooked in T040), an `/api/v1` `APIRouter` onto which US routers are mounted later, and module-level `app = create_app()`
 - [ ] T010 [P] Implement `backend/tests/conftest.py` (depends on T008, T009): per-test isolated SQLite engine (temp file or in-memory with `StaticPool`), `get_session` dependency override, `client` fixture (`TestClient` against `create_app()` with an empty database, no seed), and helper factories `make_board(client, name)` and `make_ticket(client, board_id, **fields)` returning the response JSON
-- [ ] T011 [P] Write `backend/tests/test_errors.py` (Red first): the uniform body shape for 404, 409, 422 `validation_error` (with `details` naming the field) and 422 `invalid_move`; invalid JSON body and unknown fields → 422 `validation_error`; unsupported method (e.g. `DELETE /api/v1/boards/1`) → 405 `http_error` in the same body; an unexpected exception (register a throwaway route raising `RuntimeError("secret db detail")` on a test app) → 500 `internal_error` with generic message and no traceback or the secret text in the body
-- [ ] T012 [P] Write `backend/tests/test_cors.py` (Red first): a request with `Origin: http://localhost:5173` gets `Access-Control-Allow-Origin: http://localhost:5173`; a preflight `OPTIONS` from that origin succeeds; `Origin: http://evil.example` gets no allow-origin header; `CORS_ORIGINS` override with two origins allows both
 - [ ] T013 [P] Implement `backend/scripts/export_openapi.py`: build the app via `create_app()` and write `app.openapi()` as sorted, indented JSON to `specs/001-kanban-ticketing/contracts/openapi.json` (path resolved relative to the script)
 
-**Checkpoint**: Foundation ready (T011/T012 should pass now; the rest of the suite is Red until stories are implemented)
+**Checkpoint**: Foundation ready (T011/T012 were seen failing first and pass now after T006/T009/T010; the rest of the suite is Red until stories are implemented)
 
 ---
 
@@ -155,6 +157,7 @@ Backend-only feature. All code lives under `backend/` (own uv project), all path
 
 ### Task-level Dependencies
 
+- T011, T012 are written first and must FAIL before T006/T009 are implemented (T006, T009 ← T011/T012 Red run)
 - T008 ← T005, T007; T009 ← T005, T006, T008; T010 ← T008, T009
 - T020, T021 ← T007, T019; T022 ← T020, T021; T023 ← T021, T022
 - T029 ← T021, T028; T030 ← T029
@@ -170,7 +173,7 @@ Backend-only feature. All code lives under `backend/` (own uv project), all path
 ### Parallel Opportunities
 
 - Setup: T003, T004 in parallel
-- Foundational: T005, T006, T007 in parallel; then T010, T011, T012, T013 in parallel once T008/T009 exist
+- Foundational: T011, T012 first (Red); then T005, T006, T007 in parallel; then T010, T013 in parallel once T008/T009 exist
 - US1 tests T014–T018 are all different files and run in parallel; T019 can run alongside them
 - US2 tests T025–T027 in parallel; US3 tests T032 and schemas T033 in parallel
 - Polish: T037, T038, T039, T042, T043 in parallel
