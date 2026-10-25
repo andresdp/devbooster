@@ -48,6 +48,16 @@ class TicketUpdate(RequestModel):
         return self
 
 
+class TicketMove(RequestModel):
+    """Move to another column of the same board, or reorder within the current one.
+
+    `position` is zero-based; omitted means the bottom of the target column.
+    """
+
+    column_id: int
+    position: int | None = Field(default=None, ge=0)
+
+
 class TicketRead(BaseModel):
     key: str
     title: str

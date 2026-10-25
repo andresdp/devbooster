@@ -10,12 +10,23 @@ def test_committed_contract_matches_app():
     )
 
 
+ERROR_STATUSES = ("404", "409", "422", "500")
+
+
+def test_every_operation_declares_the_error_statuses():
+    document = build_openapi()
+    for path, operations in document["paths"].items():
+        for method, operation in operations.items():
+            missing = [s for s in ERROR_STATUSES if s not in operation["responses"]]
+            assert not missing, f"{method.upper()} {path} lacks {missing}"
+
+
 def test_error_statuses_document_the_error_body():
     document = build_openapi()
     for path, operations in document["paths"].items():
         for method, operation in operations.items():
-            for status in ("404", "422"):
-                response = operation["responses"].get(status)
-                assert response is not None, f"{method.upper()} {path} lacks {status}"
+            for status, response in operation["responses"].items():
+                if status.startswith("2"):
+                    continue
                 ref = response["content"]["application/json"]["schema"]["$ref"]
                 assert ref.endswith("/ErrorResponse"), f"{method.upper()} {path} {status}"

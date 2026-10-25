@@ -34,8 +34,13 @@ def make_engine(url: str) -> Engine:
 def begin_write(session: Session) -> None:
     """Start the session's transaction as BEGIN IMMEDIATE so writers are serialized.
 
-    Must be the first database access of the session.
+    A transaction already open on the session must be read-only (for example the one a
+    `refresh` after an earlier commit opened); it is ended so the write can begin immediately.
     """
+    if session.in_transaction():
+        if session.new or session.dirty or session.deleted:
+            raise RuntimeError("begin_write called with uncommitted changes on the session")
+        session.rollback()
     session.connection(execution_options={"immediate": True})
 
 

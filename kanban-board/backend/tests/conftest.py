@@ -10,6 +10,7 @@ def settings(tmp_path) -> Settings:
     return Settings(
         database_url=f"sqlite:///{tmp_path / 'test.db'}",
         cors_origins=["http://localhost:5173"],
+        seed_on_startup=False,
     )
 
 
@@ -36,3 +37,20 @@ def make_ticket(client, board_id, **fields):
     response = client.post(f"/api/v1/boards/{board_id}/tickets", json=fields)
     assert response.status_code == 201, response.text
     return response.json()
+
+
+def move_ticket(client, key, body):
+    return client.post(f"/api/v1/tickets/{key}/move", json=body)
+
+
+def board_columns(client, board_id):
+    """Map column id -> ordered tickets of the board view, asserting every column is gap-free."""
+    response = client.get(f"/api/v1/boards/{board_id}")
+    assert response.status_code == 200, response.text
+    columns = {}
+    for column in response.json()["columns"]:
+        tickets = column["tickets"]
+        assert [t["position"] for t in tickets] == list(range(len(tickets))), column
+        assert all(t["column_id"] == column["id"] for t in tickets), column
+        columns[column["id"]] = tickets
+    return columns

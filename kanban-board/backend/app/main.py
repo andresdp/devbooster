@@ -3,11 +3,13 @@ from contextlib import asynccontextmanager
 
 from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from sqlmodel import Session
 
 from app.config import Settings, get_settings
 from app.db import create_db_and_tables, make_engine
 from app.errors import register_exception_handlers
-from app.routers import boards, tickets
+from app.routers import boards, comments, tickets
+from app.seed import seed_if_empty
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
@@ -17,6 +19,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         create_db_and_tables(engine)
+        if settings.seed_on_startup:
+            with Session(engine) as session:
+                seed_if_empty(session)
         yield
         engine.dispose()
 
@@ -34,6 +39,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     api = APIRouter(prefix="/api/v1")
     api.include_router(boards.router)
     api.include_router(tickets.router)
+    api.include_router(comments.router)
     app.include_router(api)
     return app
 

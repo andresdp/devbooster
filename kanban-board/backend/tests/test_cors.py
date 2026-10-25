@@ -7,7 +7,11 @@ ORIGIN = "http://localhost:5173"
 
 
 def make_client(tmp_path, origins):
-    settings = Settings(database_url=f"sqlite:///{tmp_path / 'cors.db'}", cors_origins=origins)
+    settings = Settings(
+        database_url=f"sqlite:///{tmp_path / 'cors.db'}",
+        cors_origins=origins,
+        seed_on_startup=False,
+    )
     return TestClient(create_app(settings))
 
 

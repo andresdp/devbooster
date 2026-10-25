@@ -18,6 +18,7 @@ def test_data_survives_a_restart(tmp_path):
     settings = Settings(
         database_url=f"sqlite:///{tmp_path / 'persist.db'}",
         cors_origins=["http://localhost:5173"],
+        seed_on_startup=False,
     )
     first_app = create_app(settings)
     with TestClient(first_app) as client:

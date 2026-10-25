@@ -19,6 +19,7 @@ dev = [
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+filterwarnings = ["error::sqlalchemy.exc.SAWarning"]
 
 [tool.ruff]
 line-length = 100

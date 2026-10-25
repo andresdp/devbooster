@@ -128,6 +128,24 @@
         "title": "ColumnRead",
         "type": "object"
       },
+      "ColumnRef": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ],
+        "title": "ColumnRef",
+        "type": "object"
+      },
       "ColumnWithTickets": {
         "properties": {
           "id": {
@@ -157,6 +175,63 @@
           "tickets"
         ],
         "title": "ColumnWithTickets",
+        "type": "object"
+      },
+      "CommentCreate": {
+        "additionalProperties": false,
+        "properties": {
+          "author": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Author",
+            "type": "string"
+          },
+          "text": {
+            "maxLength": 5000,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "author",
+          "text"
+        ],
+        "title": "CommentCreate",
+        "type": "object"
+      },
+      "CommentRead": {
+        "properties": {
+          "author": {
+            "title": "Author",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "ticket_key": {
+            "title": "Ticket Key",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "ticket_key",
+          "author",
+          "text",
+          "created_at"
+        ],
+        "title": "CommentRead",
         "type": "object"
       },
       "ErrorBody": {
@@ -221,6 +296,45 @@
         "title": "ErrorResponse",
         "type": "object"
       },
+      "HistoryEntryRead": {
+        "properties": {
+          "changed_at": {
+            "format": "date-time",
+            "title": "Changed At",
+            "type": "string"
+          },
+          "from_column": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ColumnRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "ticket_key": {
+            "title": "Ticket Key",
+            "type": "string"
+          },
+          "to_column": {
+            "$ref": "#/components/schemas/ColumnRef"
+          }
+        },
+        "required": [
+          "id",
+          "ticket_key",
+          "from_column",
+          "to_column",
+          "changed_at"
+        ],
+        "title": "HistoryEntryRead",
+        "type": "object"
+      },
       "Priority": {
         "enum": [
           "low",
@@ -273,6 +387,33 @@
           "title"
         ],
         "title": "TicketCreate",
+        "type": "object"
+      },
+      "TicketMove": {
+        "additionalProperties": false,
+        "description": "Move to another column of the same board, or reorder within the current one.\n\n`position` is zero-based; omitted means the bottom of the target column.",
+        "properties": {
+          "column_id": {
+            "title": "Column Id",
+            "type": "integer"
+          },
+          "position": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Position"
+          }
+        },
+        "required": [
+          "column_id"
+        ],
+        "title": "TicketMove",
         "type": "object"
       },
       "TicketRead": {
@@ -869,6 +1010,332 @@
           }
         },
         "summary": "Update Ticket",
+        "tags": [
+          "tickets"
+        ]
+      }
+    },
+    "/api/v1/tickets/{key}/comments": {
+      "get": {
+        "operationId": "list_comments_api_v1_tickets__key__comments_get",
+        "parameters": [
+          {
+            "description": "e.g. TKT-12",
+            "in": "path",
+            "name": "key",
+            "required": true,
+            "schema": {
+              "description": "e.g. TKT-12",
+              "pattern": "^TKT-[1-9][0-9]*$",
+              "title": "Key",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/CommentRead"
+                  },
+                  "title": "Response List Comments Api V1 Tickets  Key  Comments Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Validation error or invalid move"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unexpected failure"
+          }
+        },
+        "summary": "List Comments",
+        "tags": [
+          "comments"
+        ]
+      },
+      "post": {
+        "operationId": "add_comment_api_v1_tickets__key__comments_post",
+        "parameters": [
+          {
+            "description": "e.g. TKT-12",
+            "in": "path",
+            "name": "key",
+            "required": true,
+            "schema": {
+              "description": "e.g. TKT-12",
+              "pattern": "^TKT-[1-9][0-9]*$",
+              "title": "Key",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommentCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommentRead"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Validation error or invalid move"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unexpected failure"
+          }
+        },
+        "summary": "Add Comment",
+        "tags": [
+          "comments"
+        ]
+      }
+    },
+    "/api/v1/tickets/{key}/history": {
+      "get": {
+        "operationId": "list_history_api_v1_tickets__key__history_get",
+        "parameters": [
+          {
+            "description": "e.g. TKT-12",
+            "in": "path",
+            "name": "key",
+            "required": true,
+            "schema": {
+              "description": "e.g. TKT-12",
+              "pattern": "^TKT-[1-9][0-9]*$",
+              "title": "Key",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/HistoryEntryRead"
+                  },
+                  "title": "Response List History Api V1 Tickets  Key  History Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Validation error or invalid move"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unexpected failure"
+          }
+        },
+        "summary": "List History",
+        "tags": [
+          "comments"
+        ]
+      }
+    },
+    "/api/v1/tickets/{key}/move": {
+      "post": {
+        "operationId": "move_ticket_api_v1_tickets__key__move_post",
+        "parameters": [
+          {
+            "description": "e.g. TKT-12",
+            "in": "path",
+            "name": "key",
+            "required": true,
+            "schema": {
+              "description": "e.g. TKT-12",
+              "pattern": "^TKT-[1-9][0-9]*$",
+              "title": "Key",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketMove"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketRead"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Validation error or invalid move"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unexpected failure"
+          }
+        },
+        "summary": "Move Ticket",
         "tags": [
           "tickets"
         ]
