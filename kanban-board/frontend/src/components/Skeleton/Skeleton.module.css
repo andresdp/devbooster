@@ -1,0 +1,35 @@
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.card {
+  padding: var(--space-md);
+  border-radius: var(--radius);
+  background: var(--color-surface-container-lowest);
+  box-shadow: var(--shadow-sm);
+}
+
+.bar {
+  height: 0.75rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-container-high);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.bar:last-child {
+  width: 60%;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar {
+    animation: none;
+  }
+}

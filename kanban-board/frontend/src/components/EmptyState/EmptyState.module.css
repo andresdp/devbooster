@@ -1,0 +1,21 @@
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xl);
+  text-align: center;
+  color: var(--color-outline);
+}
+
+.title {
+  font-size: var(--text-headline-sm-size);
+  line-height: var(--text-headline-sm-line);
+  font-weight: var(--text-headline-sm-weight);
+  color: var(--color-on-surface);
+}
+
+.description {
+  max-width: 28rem;
+  color: var(--color-on-surface-variant);
+}

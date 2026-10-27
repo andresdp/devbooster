@@ -1,0 +1,19 @@
+.banner {
+  display: flex;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  border-radius: var(--radius);
+  background: var(--color-error-container);
+  color: var(--color-on-error-container);
+  font-size: var(--text-body-sm-size);
+  line-height: var(--text-body-sm-line);
+}
+
+.title {
+  font-weight: 600;
+}
+
+.list {
+  margin: var(--space-xs) 0 0;
+  padding-left: var(--space-lg);
+}

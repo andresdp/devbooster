@@ -1,0 +1,13 @@
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-xl);
+  text-align: center;
+  color: var(--color-error);
+}
+
+.message {
+  color: var(--color-on-surface);
+}

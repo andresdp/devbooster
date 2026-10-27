@@ -1,0 +1,23 @@
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xl);
+  text-align: center;
+}
+
+.title {
+  font-size: var(--text-headline-md-size);
+  line-height: var(--text-headline-md-line);
+  font-weight: var(--text-headline-md-weight);
+}
+
+.description {
+  color: var(--color-on-surface-variant);
+}
+
+.link {
+  color: var(--color-primary);
+  font-weight: 500;
+}

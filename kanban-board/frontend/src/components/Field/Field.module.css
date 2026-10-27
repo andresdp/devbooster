@@ -1,0 +1,39 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.label {
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line);
+  font-weight: var(--text-label-md-weight);
+  color: var(--color-on-surface-variant);
+}
+
+.asterisk {
+  margin-left: var(--space-xs);
+  color: var(--color-error);
+}
+
+.hint {
+  font-size: var(--text-body-sm-size);
+  line-height: var(--text-body-sm-line);
+  color: var(--color-outline);
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--text-label-sm-size);
+  line-height: var(--text-label-sm-line);
+  font-weight: var(--text-label-sm-weight);
+  color: var(--color-error);
+}
+
+.field :is(input, select, textarea)[aria-invalid="true"] {
+  border-color: var(--color-error);
+  outline-color: var(--color-error);
+  box-shadow: 0 0 0 1px var(--color-error);
+}
