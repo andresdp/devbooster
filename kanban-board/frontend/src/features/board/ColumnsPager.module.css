@@ -1,0 +1,37 @@
+.pager {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  padding: var(--space-sm);
+}
+
+@media (max-width: 639px) {
+  .pager {
+    display: flex;
+  }
+}
+
+.label {
+  font-size: var(--text-label-md-size);
+  color: var(--color-on-surface-variant);
+}
+
+.dots {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--color-outline-variant);
+  cursor: pointer;
+}
+
+.current {
+  background: var(--color-primary);
+}

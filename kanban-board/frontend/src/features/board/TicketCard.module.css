@@ -1,0 +1,90 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background: var(--color-surface-container-lowest);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  color: var(--color-on-surface);
+  text-decoration: none;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  min-width: 0;
+}
+
+.key {
+  font-family: var(--font-mono);
+  font-size: var(--text-ticket-key-size);
+  line-height: var(--text-ticket-key-line);
+  font-weight: var(--text-ticket-key-weight);
+  letter-spacing: var(--text-ticket-key-tracking);
+  color: var(--color-on-surface-variant);
+}
+
+.assignee,
+.unassigned {
+  font-size: var(--text-body-sm-size);
+  line-height: var(--text-body-sm-line);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.unassigned {
+  font-style: italic;
+  color: var(--color-on-surface-variant);
+}
+
+.title {
+  font-size: var(--text-body-md-size);
+  line-height: var(--text-body-md-line);
+  font-weight: 500;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.badges {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+/* Hooks for drag-and-drop states (added in US4). */
+.dragging,
+.placeholder,
+.saving {
+}
+
+.dragging {
+  transform: rotate(2deg) scale(1.02);
+  box-shadow: var(--shadow-drag);
+}
+
+.dragging .key {
+  color: var(--color-primary);
+}
+
+.saving {
+  opacity: 0.6;
+}
+
+.savingLabel {
+  font-size: var(--text-label-sm-size);
+  color: var(--color-on-surface-variant);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dragging {
+    transform: none;
+  }
+}

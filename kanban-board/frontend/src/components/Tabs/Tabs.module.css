@@ -1,0 +1,27 @@
+.list {
+  display: flex;
+  gap: var(--space-lg);
+  border-bottom: 1px solid var(--color-outline-variant);
+}
+
+.tab {
+  min-height: 40px;
+  padding: var(--space-sm) 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  cursor: pointer;
+  font-size: var(--text-label-lg-size);
+  line-height: var(--text-label-lg-line);
+  font-weight: var(--text-label-lg-weight);
+  color: var(--color-on-surface-variant);
+}
+
+.active {
+  border-bottom-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.panel {
+  padding-top: var(--space-lg);
+}

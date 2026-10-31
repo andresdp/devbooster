@@ -1,21 +1,11 @@
 import { useState } from "react";
 import { Route, Routes } from "react-router";
 import { AppHeader } from "./components/AppHeader/AppHeader";
-import { Dialog } from "./components/Dialog/Dialog";
 import { NotFoundState } from "./components/NotFoundState/NotFoundState";
-
-// Placeholders: replaced by the real pages in the story phases.
-function BoardListPage() {
-  return <h1>Boards</h1>;
-}
-
-function BoardPage() {
-  return <h1>Board</h1>;
-}
-
-function TicketDrawer() {
-  return <h2>Ticket</h2>;
-}
+import { BoardPage } from "./features/board/BoardPage";
+import { TicketDrawer } from "./features/ticket/TicketDrawer";
+import { BoardListPage } from "./features/boards/BoardListPage";
+import { BoardCreateDialog } from "./features/boards/BoardCreateDialog";
 
 function NotFoundPage() {
   return (
@@ -36,18 +26,14 @@ export default function App() {
       <AppHeader onNewBoard={() => setNewBoardOpen(true)} />
       <main>
         <Routes>
-          <Route path="/" element={<BoardListPage />} />
+          <Route path="/" element={<BoardListPage onNewBoard={() => setNewBoardOpen(true)} />} />
           <Route path="/boards/:boardId" element={<BoardPage />}>
             <Route path="tickets/:key" element={<TicketDrawer />} />
           </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
-      {newBoardOpen ? (
-        <Dialog title="New board" onClose={() => setNewBoardOpen(false)}>
-          <p>Board creation arrives with the next story.</p>
-        </Dialog>
-      ) : null}
+      {newBoardOpen ? <BoardCreateDialog onClose={() => setNewBoardOpen(false)} /> : null}
     </>
   );
 }

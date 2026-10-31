@@ -1,0 +1,11 @@
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  border: 2px dashed var(--color-primary);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--color-primary-fixed) 30%, transparent);
+  font-size: var(--text-label-md-size);
+  color: var(--color-primary);
+}

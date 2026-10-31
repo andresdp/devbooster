@@ -127,3 +127,20 @@ Verdict rules applied: PASS = the artifacts already state it clearly; GAP = miss
 3. **Define in-flight and rollback appearance once (CHK009, CHK024, CHK025, CHK026)** in FR-016/FR-010: button labels while pending, the `saving` card style after 300 ms, instant snap-back, what stays interactive.
 4. **Decide board-create navigation and header button (CHK010)** in FR-002: "New board" everywhere, success opens the new board, and US-2 AS1 updated to match.
 5. **Close the error-surface holes (CHK017, CHK016, CHK020)** in FR-014/FR-011/AS-008: inline surface for move-from-detail, when each error clears, and the four client-authored texts.
+
+---
+
+## Implementation validation notes (2026-10-31)
+
+Automated: 195 Vitest tests green; typecheck, lint, format:check and build clean; `schema.d.ts` unchanged after `api:generate`; `backend/` and `specs/001-kanban-ticketing/` untouched.
+
+Checked in Chrome against the real backend (localhost:8000 / 5173):
+- PASS US1: board renders four columns with cards, badges, assignee/"Unassigned".
+- PASS US3: `/boards/1/tickets/TKT-3` opens the drawer (key, title, description, badges, assignee, column chip, created/updated, Move to, tabs "Comments (1)" / "History (2)").
+- PASS US4 (keyboard): Space, ArrowRight x2, Space moved TKT-8 from To Do into In Progress; the backend persisted the order and wrote a history entry "To Do → In Progress". A same-column keyboard reorder of TKT-6 also persisted. The first ArrowRight steps to the neighbouring card before crossing columns (dnd-kit behaviour).
+- NOT VERIFIED manually: pointer drag (the browser tool's scripted drag did not trigger the 6px mouse activation), the two-tab stale-move case, quickstart US2 steps against the real backend (covered by MSW tests only), US5 against the real backend, offline/Retry steps, phone width at 375px (the browser window could not be resized below its minimum width), and the visual comparison with `design/*.png` beyond a glance at the board and drawer.
+
+Intentional deviations:
+- Text that used `--color-outline` now uses `--color-on-surface-variant` (outline measured 4.05–4.49:1; FR-024 needs 4.5:1). Badge pairs measured 4.54–7.24:1.
+- Collision detection is pointer → rect overlap (cards preferred over columns) → `closestCorners`, because `closestCorners` alone prefers a neighbouring column's cards over the hovered tall column.
+- `BoardPage.perf.test.tsx` asserts keyboard pick-up/cancel on the last of 200 cards rather than a full arrow-key move, because jsdom has no layout; cross-column arrow moves are covered in `BoardDnd.test.tsx`.

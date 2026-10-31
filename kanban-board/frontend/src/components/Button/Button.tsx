@@ -1,10 +1,11 @@
-import type { ButtonHTMLAttributes } from "react";
+import type { ButtonHTMLAttributes, Ref } from "react";
 import styles from "./Button.module.css";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "ghost";
   pending?: boolean;
   pendingLabel?: string;
+  ref?: Ref<HTMLButtonElement>;
 }
 
 export function Button({
