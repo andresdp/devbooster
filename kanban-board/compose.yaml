@@ -1,0 +1,60 @@
+# Kanban app in containers (spec 004). Only Docker is needed on the host.
+#
+#   Start:  docker compose up -d --build --wait     (app at http://localhost:8080)
+#   Stop:   docker compose down                     (data is kept)
+#   Reset:  docker compose down -v                  DESTRUCTIVE: deletes all containerized app data
+#
+# Settings come from KANBAN_* variables in the shell or the root .env (interpolation only;
+# .env is never passed into a container). Every setting has a default, so no .env is needed.
+name: kanban
+
+services:
+  backend:
+    build:
+      context: ./backend
+      target: runtime
+    image: kanban-backend:${KANBAN_IMAGE_TAG:-local}
+    expose:
+      - "8000"
+    environment:
+      DATABASE_URL: "${KANBAN_DATABASE_URL:-sqlite:////data/kanban.db}"
+      SEED_ON_STARTUP: "${KANBAN_SEED_ON_STARTUP:-true}"
+      # Empty = same-origin only (the default setup needs no CORS). '*' is rejected.
+      CORS_ORIGINS: "${KANBAN_CORS_ORIGINS:-}"
+    volumes:
+      - kanban-data:/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/boards', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 15s
+      start_interval: 1s
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      target: runtime
+    image: kanban-frontend:${KANBAN_IMAGE_TAG:-local}
+    ports:
+      # Loopback by default. KANBAN_BIND_ADDRESS=0.0.0.0 opens the app (no login!) to the network.
+      - "${KANBAN_BIND_ADDRESS:-127.0.0.1}:${KANBAN_PORT:-8080}:8080"
+    environment:
+      BACKEND_UPSTREAM: "${KANBAN_BACKEND_UPSTREAM:-http://backend:8000}"
+    depends_on:
+      backend:
+        condition: service_healthy
+        restart: true
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/api/v1/boards"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 15s
+      start_interval: 1s
+    restart: unless-stopped
+
+volumes:
+  # Boards, tickets, comments and history. Survives `down`; only `down -v` deletes it.
+  kanban-data: {}
