@@ -1,0 +1,16 @@
+# Deny list (research R12). Test files under src/ stay: `tsc -b` type-checks them during the build,
+# but only dist/ reaches the final image.
+.git
+**/.DS_Store
+**/.env
+**/.env.*
+**/.npmrc
+*.pem
+Dockerfile
+.dockerignore
+*.md
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+*.local

@@ -40,6 +40,14 @@ differs.
 `VITE_API_BASE_URL` overrides the backend address (default `http://localhost:8000`); see
 `.env.example`.
 
+### Container build
+
+The Docker image (`Dockerfile`) builds with `VITE_API_BASE_URL=""`, so the app calls `/api/...` on
+its own origin and nginx forwards those requests to the backend
+(`nginx/default.conf.template`). The dev server default `http://localhost:8000` is unchanged. The
+image build fails if `localhost:8000` appears in `dist/`. See "Run with Docker" in the
+[root README](../README.md).
+
 ## Project layout
 
 ```text

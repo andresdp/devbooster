@@ -264,3 +264,36 @@ Each item records the decision, why, and what else was considered. The installed
 
 None. All Technical Context unknowns are resolved above. Exact patch tags/digests for base images and
 the `uv` version are pinned at implementation time to the latest releases of the chosen lines.
+
+## Pinned versions
+
+Resolved on 2026-11-01 (T001). Each tag was checked with `docker buildx imagetools inspect` and
+publishes both `linux/amd64` and `linux/arm64` (FR-018, R13).
+
+| Image | Pinned tag | Used in |
+|---|---|---|
+| Python | `python:3.12.16-slim-trixie` | `backend/Dockerfile` (`build` and `runtime`) |
+| uv | `ghcr.io/astral-sh/uv:0.13.6` | `backend/Dockerfile` (`build`) |
+| Node | `node:24.22.2-trixie-slim` | `frontend/Dockerfile` (`build`) — same Debian release (trixie) as Python |
+| nginx | `nginxinc/nginx-unprivileged:1.30.6-alpine` | `frontend/Dockerfile` (`runtime`) — 1.30 is the current stable line (1.31 is mainline) |
+| Playwright | `mcr.microsoft.com/playwright:v1.64.1-noble` | `e2e/Dockerfile` — equals `@playwright/test` 1.64.1 locked in `e2e/package-lock.json` |
+
+**Implementation note (R2)**: the backend build uses `uv sync --locked` instead of `--frozen`.
+Tested during T010: `--frozen` installs from `uv.lock` without checking it against
+`pyproject.toml`, so a stale lock still built; `--locked` installs the same locked versions and
+fails the build with "The lockfile at `uv.lock` needs to be updated".
+
+**Implementation note (R5, upstream re-resolution)**: `depends_on.restart: true` restarts the
+frontend only when Compose itself restarts or recreates the backend. After
+`docker compose stop backend` + `docker compose up -d`, the backend can come back with a new IP
+while nginx kept the one it resolved at start, so `/api/` stayed at 503 and the frontend turned
+unhealthy (reproduced in T014). The template now proxies through a variable
+(`set $backend_upstream ${BACKEND_UPSTREAM}`) with `resolver ${NGINX_LOCAL_RESOLVERS} valid=10s`.
+`NGINX_LOCAL_RESOLVERS` is filled by the nginx image's own entrypoint
+(`NGINX_ENTRYPOINT_LOCAL_RESOLVERS=1`) from the container's `/etc/resolv.conf`, so no
+Docker-specific address such as `127.0.0.11` is hard-coded. `BACKEND_UPSTREAM` must stay
+`scheme://host:port` without a path.
+The template also sets `proxy_connect_timeout 3s` and `valid=5s`: while a stopped backend's old IP
+is still cached, connecting to it hangs (no refusal) until the nginx default of 60 s, which held
+`/api/` requests for ~25 s and turned the frontend unhealthy in T025's runs. The smoke check now
+asserts the "API down" JSON answer arrives within 5 s.
