@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>Kanban Ticketing</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-tertiary-fixed": "#001e2f", "on-tertiary-fixed-variant": "#004c6e", "tertiary-fixed-dim": "#89ceff", "error-container": "#ffdad6", "tertiary-fixed": "#c9e6ff", "primary-fixed": "#e2dfff", "on-surface-variant": "#464555", "secondary-container": "#6063ee", "on-secondary-fixed-variant": "#2f2ebe", "surface-container-lowest": "#ffffff", "surface-dim": "#dad9e3", "on-surface": "#1a1b22", "primary-fixed-dim": "#c3c0ff", "on-secondary-container": "#fffbff", "error": "#ba1a1a", "on-primary": "#ffffff", "surface-container": "#eeedf7", "tertiary": "#004d70", "surface-variant": "#e3e1ec", "surface-container-high": "#e8e7f1", "on-error": "#ffffff", "on-background": "#1a1b22", "on-primary-container": "#dad7ff", "secondary-fixed": "#e1e0ff", "on-tertiary-container": "#b8e0ff", "on-primary-fixed-variant": "#3323cc", "outline": "#777587", "primary": "#3525cd", "surface": "#fbf8ff", "primary-container": "#4f46e5", "on-secondary-fixed": "#07006c", "background": "#fbf8ff", "outline-variant": "#c7c4d8", "secondary": "#4648d4", "surface-tint": "#4d44e3", "secondary-fixed-dim": "#c0c1ff", "surface-container-low": "#f4f2fd", "inverse-on-surface": "#f1effa", "surface-container-highest": "#e3e1ec", "tertiary-container": "#006693", "on-error-container": "#93000a", "on-tertiary": "#ffffff", "on-secondary": "#ffffff", "surface-bright": "#fbf8ff", "on-primary-fixed": "#0f0069", "inverse-primary": "#c3c0ff", "inverse-surface": "#2f3038" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-lg": "1rem", "space-sm": "0.5rem", "space-xs": "0.25rem", "space-md": "0.75rem", "gutter-compact": "0.5rem", "space-xl": "1.5rem", "margin-mobile": "1rem", "margin": "1.5rem", "gutter": "1rem" }, "fontFamily": { "label-md": ["Inter"], "label-lg": ["Inter"], "body-md": ["Inter"], "headline-md": ["Inter"], "body-lg": ["Inter"], "label-sm": ["Inter"], "headline-lg": ["Inter"], "headline-sm": ["Inter"], "code-md": ["JetBrains Mono"], "body-sm": ["Inter"], "ticket-key": ["JetBrains Mono"] }, "fontSize": { "label-md": ["0.75rem", { "lineHeight": "1rem", "fontWeight": "500" }], "label-lg": ["0.875rem", { "lineHeight": "1.25rem", "fontWeight": "500" }], "body-md": ["0.875rem", { "lineHeight": "1.25rem", "fontWeight": "400" }], "headline-md": ["1.375rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.015em", "fontWeight": "600" }], "body-lg": ["1rem", { "lineHeight": "1.5rem", "fontWeight": "400" }], "label-sm": ["0.6875rem", { "lineHeight": "0.875rem", "fontWeight": "600" }], "headline-lg": ["1.75rem", { "lineHeight": "2.25rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "headline-sm": ["1.125rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "600" }], "code-md": ["0.8125rem", { "lineHeight": "1.125rem", "fontWeight": "500" }], "body-sm": ["0.75rem", { "lineHeight": "1rem", "fontWeight": "400" }], "ticket-key": ["0.6875rem", { "lineHeight": "0.875rem", "letterSpacing": "0.04em", "fontWeight": "600" }] } } } };</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-outline-variant"><div class="h-12 w-full px-margin flex items-center justify-between"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs text-primary"><span class="material-symbols-outlined text-[20px]">view_kanban</span><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight">Kanban Ticketing</span></div><div class="h-4 w-px bg-outline-variant"></div><div class="relative"><button class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface hover:bg-surface-container border border-outline-variant text-on-surface hover:text-on-surface transition-colors" type="button"><span class="font-label-lg text-label-lg">Sprint 24 Backlog</span><span class="material-symbols-outlined text-outline text-[16px]">expand_more</span></button></div><nav class="hidden md:flex items-center gap-space-md ml-space-sm" data-active-classes="text-on-surface border-b-2 border-primary font-label-lg text-label-lg"><a aria-current="page" class="transition-colors py-1.5 text-on-surface border-b-2 border-primary font-label-lg text-label-lg" data-path="board-view" href="#">Board</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors py-1.5" data-path="backlog-stream" href="#">Backlog</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors py-1.5" data-path="board-settings" href="#">Settings</a></nav></div><div class="flex items-center"><button class="flex items-center gap-space-xs px-space-md py-1.5 rounded bg-primary-container hover:bg-primary text-on-primary-container hover:text-on-primary font-label-md text-label-md transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">add</span><span>New board</span></button></div></div></header><main class="w-full pt-12 min-h-screen bg-surface"><div class="flex flex-col w-full">
+<!-- Toast Notification: Server Rejection / Boundary Error -->
+<div class="fixed top-14 right-6 z-50 flex items-start gap-space-sm p-space-md rounded bg-surface-container-lowest shadow-md max-w-sm animate-pulse">
+<span class="material-symbols-outlined text-error text-[20px] shrink-0 mt-0.5">error_outline</span>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold tracking-tight">Move Rejected</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Failed to move <span class="font-ticket-key text-ticket-key font-bold text-on-surface">TKT-19</span>: Position out of bounds · Reverting card position</span>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface ml-auto shrink-0" onclick="this.parentElement.remove()" type="button">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+<!-- Subheader with Title, Live Open Dropdown & "+ New board" button -->
+<div class="relative w-full bg-surface-container-low px-margin py-space-md shadow-sm">
+<div class="flex flex-wrap items-center justify-between gap-space-md max-w-7xl mx-auto">
+<div class="relative">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Sprint Active</span>
+<span class="text-outline">·</span>
+<div class="inline-flex items-center gap-space-xs font-headline-md text-headline-md text-on-surface">
+<span>Sprint 24 Backlog</span>
+<span class="material-symbols-outlined text-primary text-[22px]">keyboard_arrow_down</span>
+</div>
+</div>
+<!-- Open Board Switcher Dropdown (Strictly Open State) -->
+<div class="absolute left-0 top-full mt-2 w-72 rounded bg-surface-container-lowest shadow-xl z-40 p-space-xs">
+<div class="px-space-sm py-1 font-label-sm text-label-sm uppercase text-outline">Switch Active Board</div>
+<div class="flex flex-col gap-0.5 mt-1">
+<!-- Active item -->
+<button class="w-full flex items-center justify-between px-space-sm py-2 rounded bg-surface-container text-left" type="button">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-primary">view_kanban</span>
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Sprint 24 Backlog</span>
+</div>
+<span class="material-symbols-outlined text-[18px] text-primary" style="font-variation-settings: 'FILL' 1;">check</span>
+</button>
+<!-- Inactive item 1 -->
+<button class="w-full flex items-center justify-between px-space-sm py-2 rounded hover:bg-surface-container-low text-left transition-colors" type="button">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-outline">terminal</span>
+<span class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface">Q4 Infrastructure &amp; CI/CD</span>
+</div>
+</button>
+<!-- Inactive item 2 -->
+<button class="w-full flex items-center justify-between px-space-sm py-2 rounded hover:bg-surface-container-low text-left transition-colors" type="button">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-outline">devices</span>
+<span class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface">Growth &amp; Mobile Client</span>
+</div>
+</button>
+</div>
+</div>
+</div>
+<!-- Header Action: + New board -->
+<button class="inline-flex items-center gap-space-xs px-space-md py-1.5 rounded bg-primary text-on-primary font-label-md text-label-md hover:opacity-90 shadow-sm transition-opacity" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>+ New board</span>
+</button>
+</div>
+</div>
+<!-- Main Kanban Board Canvas -->
+<div class="w-full max-w-7xl mx-auto px-margin py-space-xl">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter items-start">
+<!-- ================= COLUMN 1: TO DO (Count: 4) ================= -->
+<div class="flex flex-col bg-surface-container-low rounded p-space-sm shadow-sm min-h-[580px]">
+<!-- Column Header -->
+<div class="flex items-center justify-between px-space-xs py-space-sm mb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-sm text-headline-sm text-on-surface">To Do</span>
+<span class="inline-flex items-center justify-center px-1.5 py-0.5 rounded-full font-label-sm text-label-sm bg-surface-container text-on-surface-variant">4</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline">circle</span>
+</div>
+<!-- Exclusively in To Do Column: + New ticket button -->
+<button class="w-full py-2 mb-space-sm rounded bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-md text-label-md flex items-center justify-center gap-space-xs transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>+ New ticket</span>
+</button>
+<!-- Column Cards Container -->
+<div class="flex flex-col gap-gutter-compact">
+<!-- Card 1: TKT-12 -->
+<div class="bg-surface-container-lowest rounded p-space-md shadow-sm hover:shadow-md transition-shadow flex flex-col gap-space-sm cursor-grab">
+<div class="flex items-center justify-between">
+<span class="font-ticket-key text-ticket-key text-outline">TKT-12</span>
+<!-- Assignee: Plain text, NO avatar -->
+<span class="font-body-sm text-body-sm text-on-surface font-medium">Danielle K.</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-medium leading-snug">Fix flaky checkout test suite on staging CI</p>
+<div class="flex items-center gap-space-xs pt-1">
+<!-- Type Badge: Bug -->
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-error-container text-on-error-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">bug_report</span>
+<span>bug</span>
+</span>
+<!-- Priority Badge: Critical -->
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-error text-on-error font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">flag</span>
+<span>critical</span>
+</span>
+</div>
+</div>
+<!-- Card 2: TKT-18 -->
+<div class="bg-surface-container-lowest rounded p-space-md shadow-sm hover:shadow-md transition-shadow flex flex-col gap-space-sm cursor-grab">
+<div class="flex items-center justify-between">
+<span class="font-ticket-key text-ticket-key text-outline">TKT-18</span>
+<!-- Assignee: Plain text, NO avatar -->
+<span class="font-body-sm text-body-sm text-on-surface font-medium">Alex Rivera</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-medium leading-snug">Implement OAuth2 refresh token auto-rotation</p>
+<div class="flex items-center gap-space-xs pt-1">
+<!-- Type Badge: Feature -->
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span>
+<span>feature</span>
+</span>
+<!-- Priority Badge: Medium -->
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">remove</span>
+<span>medium</span>
+</span>
+</div>
+</div>
+<!-- Card 3: TKT-24 -->
+<div class="bg-surface-container-lowest rounded p-space-md shadow-sm hover:shadow-md transition-shadow flex flex-col gap-space-sm cursor-grab">
+<div class="flex items-center justify-between">
+<span class="font-ticket-key text-ticket-key text-outline">TKT-24</span>
+<!-- Assignee: Unassigned plain muted text -->
+<span class="font-body-sm text-body-sm text-outline italic">Unassigned</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-medium leading-snug">Optimize cold-start latency on serverless gateway</p>
+<div class="flex items-center gap-space-xs pt-1">
+<!-- Type Badge: Task -->
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">check_box</span>
+<span>task</span>
+</span>
+<!-- Priority Badge: High -->
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>
+<span>high</span>
+</span>
+</div>
+</div>
+<!-- Card 4: Ghost / Reverting state slot for TKT-19 -->
+<div class="bg-surface-container-high/60 rounded p-space-md shadow-inner flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-ticket-key text-ticket-key text-error font-semibold">TKT-19</span>
+<div class="flex items-center gap-1 text-error">
+<span class="material-symbols-outlined text-[14px] animate-spin">sync</span>
+<span class="font-body-sm text-body-sm italic font-medium">Reverting move...</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant line-through opacity-70">Enforce dual-region replication across Redis clusters</p>
+<div class="flex items-center gap-space-xs pt-1 opacity-70">
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+<span>task</span>
+</span>
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-error-container text-on-error font-label-sm text-label-sm">
+<span>critical</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+<!-- ================= COLUMN 2: IN PROGRESS (Count: 2) ================= -->
+<div class="flex flex-col bg-surface-container-low rounded p-space-sm shadow-sm min-h-[580px]">
+<!-- Column Header -->
+<div class="flex items-center justify-between px-space-xs py-space-sm mb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-sm text-headline-sm text-on-surface">In Progress</span>
+<span class="inline-flex items-center justify-center px-1.5 py-0.5 rounded-full font-label-sm text-label-sm bg-surface-container text-on-surface-variant">2</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-tertiary">hourglass_top</span>
+</div>
+<div class="flex flex-col gap-gutter-compact">
+<!-- Active drag-and-drop placeholder: pos 0 -->
+<div class="h-20 rounded bg-primary-fixed/30 flex items-center justify-center gap-space-xs text-primary font-label-md text-label-md">
+<span class="material-symbols-outlined text-[18px]">south</span>
+<span>Drop ticket here (pos 0)</span>
+</div>
+<!-- Card: TKT-14 -->
+<div class="bg-surface-container-lowest rounded p-space-md shadow-sm hover:shadow-md transition-shadow flex flex-col gap-space-sm cursor-grab">
+<div class="flex items-center justify-between">
+<span class="font-ticket-key text-ticket-key text-outline">TKT-14</span>
+<!-- Plain text assignee -->
+<span class="font-body-sm text-body-sm text-on-surface font-medium">Sam Chen</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-medium leading-snug">Migrate CI pipelines from legacy runner to GitHub Actions</p>
+<div class="flex items-center gap-space-xs pt-1">
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">check_box</span>
+<span>task</span>
+</span>
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">remove</span>
+<span>medium</span>
+</span>
+</div>
+</div>
+<!-- Mid-Flight Dragged Card Simulation (Elevated & Tilted) -->
+<div class="relative rotate-2 scale-[1.02] bg-surface-container-lowest rounded p-space-md shadow-2xl z-20 flex flex-col gap-space-sm cursor-grabbing">
+<div class="flex items-center justify-between">
+<span class="font-ticket-key text-ticket-key text-primary font-bold">TKT-19</span>
+<span class="font-body-sm text-body-sm text-on-surface font-medium">Danielle K.</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-medium leading-snug">Enforce dual-region replication across Redis clusters</p>
+<div class="flex items-center gap-space-xs pt-1">
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">check_box</span>
+<span>task</span>
+</span>
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-error text-on-error font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">flag</span>
+<span>critical</span>
+</span>
+</div>
+<div class="absolute -bottom-2 -right-2 bg-primary text-on-primary text-[10px] px-1.5 py-0.5 rounded shadow font-code-md">
+              dragging
+            </div>
+</div>
+</div>
+</div>
+<!-- ================= COLUMN 3: REVIEW (Count: 0) ================= -->
+<div class="flex flex-col bg-surface-container-low rounded p-space-sm shadow-sm min-h-[580px]">
+<!-- Column Header -->
+<div class="flex items-center justify-between px-space-xs py-space-sm mb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-sm text-headline-sm text-on-surface">Review</span>
+<span class="inline-flex items-center justify-center px-1.5 py-0.5 rounded-full font-label-sm text-label-sm bg-surface-container text-on-surface-variant">0</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline">rate_review</span>
+</div>
+<!-- Empty Column State Container -->
+<div class="flex-1 flex flex-col items-center justify-center p-space-lg text-center rounded bg-surface-container/40">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center text-outline mb-space-sm">
+<span class="material-symbols-outlined text-[24px]">inbox</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">No tickets in Review</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 max-w-[180px]">Drag cards here when ready for review</p>
+</div>
+</div>
+<!-- ================= COLUMN 4: DONE (Count: 3) ================= -->
+<div class="flex flex-col bg-surface-container-low rounded p-space-sm shadow-sm min-h-[580px]">
+<!-- Column Header -->
+<div class="flex items-center justify-between px-space-xs py-space-sm mb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-sm text-headline-sm text-on-surface">Done</span>
+<span class="inline-flex items-center justify-center px-1.5 py-0.5 rounded-full font-label-sm text-label-sm bg-surface-container text-on-surface-variant">3</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex flex-col gap-gutter-compact">
+<!-- Card: TKT-01 -->
+<div class="bg-surface-container-lowest rounded p-space-md shadow-sm hover:shadow-md transition-shadow flex flex-col gap-space-sm cursor-grab">
+<div class="flex items-center justify-between">
+<span class="font-ticket-key text-ticket-key text-outline">TKT-01</span>
+<!-- Plain text assignee -->
+<span class="font-body-sm text-body-sm text-on-surface font-medium">Maya R.</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-medium leading-snug">Dark mode color token rollout for settings page</p>
+<div class="flex items-center gap-space-xs pt-1">
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span>
+<span>feature</span>
+</span>
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span>
+<span>low</span>
+</span>
+</div>
+</div>
+<!-- Card: TKT-03 -->
+<div class="bg-surface-container-lowest rounded p-space-md shadow-sm hover:shadow-md transition-shadow flex flex-col gap-space-sm cursor-grab">
+<div class="flex items-center justify-between">
+<span class="font-ticket-key text-ticket-key text-outline">TKT-03</span>
+<!-- Plain text assignee -->
+<span class="font-body-sm text-body-sm text-on-surface font-medium">Alex Rivera</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-medium leading-snug">Audit and upgrade critical NPM dependencies</p>
+<div class="flex items-center gap-space-xs pt-1">
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">check_box</span>
+<span>task</span>
+</span>
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">remove</span>
+<span>medium</span>
+</span>
+</div>
+</div>
+<!-- Card: TKT-05 -->
+<div class="bg-surface-container-lowest rounded p-space-md shadow-sm hover:shadow-md transition-shadow flex flex-col gap-space-sm cursor-grab">
+<div class="flex items-center justify-between">
+<span class="font-ticket-key text-ticket-key text-outline">TKT-05</span>
+<!-- Assignee: Plain text italic Unassigned -->
+<span class="font-body-sm text-body-sm text-outline italic">Unassigned</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-medium leading-snug">Update REST API rate limit response documentation</p>
+<div class="flex items-center gap-space-xs pt-1">
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">check_box</span>
+<span>task</span>
+</span>
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span>
+<span>low</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- State Previews Section: Empty Boards CTA and Skeleton Loading Preview -->
+<div class="w-full max-w-7xl mx-auto px-margin pb-space-xl">
+<div class="p-space-lg rounded bg-surface-container-low shadow-sm">
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">layers</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Data Store State Handlers</span>
+</div>
+<span class="font-code-md text-code-md text-outline">API v1 Spec Reference</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+<!-- State 1: "No boards yet" CTA snippet -->
+<div class="p-space-lg rounded bg-surface-container-lowest shadow-sm flex flex-col items-center justify-center text-center">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-primary mb-space-sm">
+<span class="material-symbols-outlined text-[24px]">dashboard_customize</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface">No boards yet</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 mb-space-md max-w-xs">Create your first board to start tracking sprints, features, and engineering workloads.</p>
+<button class="inline-flex items-center gap-space-xs px-space-md py-1.5 rounded bg-primary text-on-primary font-label-md text-label-md hover:opacity-90" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>+ New board</span>
+</button>
+</div>
+<!-- State 2: Loading Skeleton Preview -->
+<div class="p-space-lg rounded bg-surface-container-lowest shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="h-4 w-32 rounded bg-surface-container-high animate-pulse"></div>
+<div class="h-4 w-8 rounded-full bg-surface-container-high animate-pulse"></div>
+</div>
+<div class="flex flex-col gap-space-sm">
+<div class="p-space-md rounded bg-surface-container flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<div class="h-3 w-16 bg-surface-container-highest rounded animate-pulse"></div>
+<div class="h-3 w-20 bg-surface-container-highest rounded animate-pulse"></div>
+</div>
+<div class="h-4 w-4/5 bg-surface-container-highest rounded animate-pulse"></div>
+<div class="flex gap-2 mt-1">
+<div class="h-4 w-12 bg-surface-container-highest rounded animate-pulse"></div>
+<div class="h-4 w-14 bg-surface-container-highest rounded animate-pulse"></div>
+</div>
+</div>
+<div class="p-space-md rounded bg-surface-container flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<div class="h-3 w-16 bg-surface-container-highest rounded animate-pulse"></div>
+<div class="h-3 w-16 bg-surface-container-highest rounded animate-pulse"></div>
+</div>
+<div class="h-4 w-3/4 bg-surface-container-highest rounded animate-pulse"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></main></body></html>

@@ -1,0 +1,39 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.label {
+  font-size: var(--text-label-md-size);
+  line-height: var(--text-label-md-line);
+  font-weight: var(--text-label-md-weight);
+  color: var(--color-on-surface-variant);
+}
+
+.track {
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  border-radius: var(--radius);
+  background: var(--color-surface-container);
+}
+
+.segment {
+  flex: 1;
+  min-height: 36px;
+  padding: var(--space-xs) var(--space-sm);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: pointer;
+  font-size: var(--text-label-md-size);
+  font-weight: var(--text-label-md-weight);
+  color: var(--color-on-surface-variant);
+}
+
+.selected {
+  background: var(--color-surface-container-lowest);
+  box-shadow: var(--shadow-sm);
+  color: var(--color-on-surface);
+}

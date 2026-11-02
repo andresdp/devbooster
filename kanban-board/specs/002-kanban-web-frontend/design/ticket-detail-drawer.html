@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>Kanban Ticketing</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-tertiary-fixed": "#001e2f", "on-tertiary-fixed-variant": "#004c6e", "tertiary-fixed-dim": "#89ceff", "error-container": "#ffdad6", "tertiary-fixed": "#c9e6ff", "primary-fixed": "#e2dfff", "on-surface-variant": "#464555", "secondary-container": "#6063ee", "on-secondary-fixed-variant": "#2f2ebe", "surface-container-lowest": "#ffffff", "surface-dim": "#dad9e3", "on-surface": "#1a1b22", "primary-fixed-dim": "#c3c0ff", "on-secondary-container": "#fffbff", "error": "#ba1a1a", "on-primary": "#ffffff", "surface-container": "#eeedf7", "tertiary": "#004d70", "surface-variant": "#e3e1ec", "surface-container-high": "#e8e7f1", "on-error": "#ffffff", "on-background": "#1a1b22", "on-primary-container": "#dad7ff", "secondary-fixed": "#e1e0ff", "on-tertiary-container": "#b8e0ff", "on-primary-fixed-variant": "#3323cc", "outline": "#777587", "primary": "#3525cd", "surface": "#fbf8ff", "primary-container": "#4f46e5", "on-secondary-fixed": "#07006c", "background": "#fbf8ff", "outline-variant": "#c7c4d8", "secondary": "#4648d4", "surface-tint": "#4d44e3", "secondary-fixed-dim": "#c0c1ff", "surface-container-low": "#f4f2fd", "inverse-on-surface": "#f1effa", "surface-container-highest": "#e3e1ec", "tertiary-container": "#006693", "on-error-container": "#93000a", "on-tertiary": "#ffffff", "on-secondary": "#ffffff", "surface-bright": "#fbf8ff", "on-primary-fixed": "#0f0069", "inverse-primary": "#c3c0ff", "inverse-surface": "#2f3038" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-lg": "1rem", "space-sm": "0.5rem", "space-xs": "0.25rem", "space-md": "0.75rem", "gutter-compact": "0.5rem", "space-xl": "1.5rem", "margin-mobile": "1rem", "margin": "1.5rem", "gutter": "1rem" }, "fontFamily": { "label-md": ["Inter"], "label-lg": ["Inter"], "body-md": ["Inter"], "headline-md": ["Inter"], "body-lg": ["Inter"], "label-sm": ["Inter"], "headline-lg": ["Inter"], "headline-sm": ["Inter"], "code-md": ["JetBrains Mono"], "body-sm": ["Inter"], "ticket-key": ["JetBrains Mono"] }, "fontSize": { "label-md": ["0.75rem", { "lineHeight": "1rem", "fontWeight": "500" }], "label-lg": ["0.875rem", { "lineHeight": "1.25rem", "fontWeight": "500" }], "body-md": ["0.875rem", { "lineHeight": "1.25rem", "fontWeight": "400" }], "headline-md": ["1.375rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.015em", "fontWeight": "600" }], "body-lg": ["1rem", { "lineHeight": "1.5rem", "fontWeight": "400" }], "label-sm": ["0.6875rem", { "lineHeight": "0.875rem", "fontWeight": "600" }], "headline-lg": ["1.75rem", { "lineHeight": "2.25rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "headline-sm": ["1.125rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "600" }], "code-md": ["0.8125rem", { "lineHeight": "1.125rem", "fontWeight": "500" }], "body-sm": ["0.75rem", { "lineHeight": "1rem", "fontWeight": "400" }], "ticket-key": ["0.6875rem", { "lineHeight": "0.875rem", "letterSpacing": "0.04em", "fontWeight": "600" }] } } } };</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-outline-variant"><div class="h-12 w-full px-margin flex items-center justify-between"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs text-primary"><span class="material-symbols-outlined text-[20px]">view_kanban</span><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight">Kanban Ticketing</span></div><div class="h-4 w-px bg-outline-variant"></div><div class="relative"><button class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface hover:bg-surface-container border border-outline-variant text-on-surface hover:text-on-surface transition-colors" type="button"><span class="font-label-lg text-label-lg">Sprint 24 Backlog</span><span class="material-symbols-outlined text-outline text-[16px]">expand_more</span></button></div><nav class="hidden md:flex items-center gap-space-md ml-space-sm" data-active-classes="text-on-surface border-b-2 border-primary font-label-lg text-label-lg"><a aria-current="page" class="transition-colors py-1.5 text-on-surface border-b-2 border-primary font-label-lg text-label-lg" data-path="board-view" href="#">Board</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors py-1.5" data-path="backlog-stream" href="#">Backlog</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors py-1.5" data-path="board-settings" href="#">Settings</a></nav></div><div class="flex items-center"><button class="flex items-center gap-space-xs px-space-md py-1.5 rounded bg-primary-container hover:bg-primary text-on-primary-container hover:text-on-primary font-label-md text-label-md transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">add</span><span>New board</span></button></div></div></header><main class="w-full pt-12 min-h-screen bg-surface"><div class="flex flex-col w-full relative overflow-x-hidden">
+<!-- Ambient Filter & Action Toolbar -->
+<div class="w-full px-margin py-space-sm bg-surface-container-lowest shadow-sm flex flex-wrap items-center justify-between gap-space-md z-10">
+<div class="flex items-center gap-space-sm flex-wrap">
+<div class="flex items-center gap-space-xs bg-surface-container-low px-space-sm py-1 rounded text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-outline">search</span>
+<input class="bg-transparent border-0 outline-none text-body-sm font-body-sm text-on-surface placeholder-outline w-44" placeholder="Filter issues..." type="text"/>
+<span class="font-code-md text-label-sm text-outline bg-surface-container px-1 rounded">⌘K</span>
+</div>
+<div class="h-4 w-px bg-surface-variant"></div>
+<!-- Quick filters -->
+<button class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-secondary-fixed text-on-secondary-fixed font-label-md text-label-md">
+<span>Only My Issues</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-sm py-1 rounded hover:bg-surface-container text-on-surface-variant font-label-md text-label-md transition-colors">
+<span>High Priority</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-sm py-1 rounded hover:bg-surface-container text-on-surface-variant font-label-md text-label-md transition-colors">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span>Bugs (3)</span>
+</button>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="flex items-center -space-x-1.5">
+<div class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container font-label-sm text-label-sm flex items-center justify-center ring-2 ring-surface-container-lowest">SC</div>
+<div class="w-6 h-6 rounded-full bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm flex items-center justify-center ring-2 ring-surface-container-lowest">DK</div>
+<div class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm flex items-center justify-center ring-2 ring-surface-container-lowest">AR</div>
+<span class="w-6 h-6 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm flex items-center justify-center ring-2 ring-surface-container-lowest">+2</span>
+</div>
+<button class="flex items-center gap-space-xs px-space-md py-1 rounded bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-container transition-colors shadow-sm" id="openNewTicketModalBtn">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>New ticket</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high transition-colors" id="openNewBoardModalBtn">
+<span class="material-symbols-outlined text-[16px]">dashboard_customize</span>
+<span>Board settings</span>
+</button>
+</div>
+</div>
+<!-- Main Kanban Board Canvas (softly dimmed behind active Drawer) -->
+<div class="w-full px-margin py-space-lg flex gap-space-lg overflow-x-auto min-h-[calc(100vh-7rem)] transition-all duration-300">
+<!-- Column: Backlog (4) -->
+<div class="flex-shrink-0 w-80 flex flex-col gap-space-sm">
+<div class="flex items-center justify-between px-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Backlog</h3>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-ticket-key">4</span>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded hover:bg-surface-container">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Card 1 -->
+<div class="p-space-md rounded-lg bg-surface-container-lowest shadow-sm hover:shadow transition-shadow flex flex-col gap-space-xs group cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-ticket-key text-ticket-key text-primary">TKT-08</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant">Feature</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-medium line-clamp-2">Audit user permissions &amp; add role-based guardrails for cluster deploys</p>
+<div class="flex items-center justify-between pt-space-xs mt-space-xs">
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">low_priority</span>
+<span class="font-label-sm text-label-sm">Low</span>
+</div>
+<div class="w-5 h-5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm flex items-center justify-center">DK</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="p-space-md rounded-lg bg-surface-container-lowest shadow-sm hover:shadow transition-shadow flex flex-col gap-space-xs group cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-ticket-key text-ticket-key text-primary">TKT-11</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-error-container text-on-error-container">Bug</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-medium line-clamp-2">Memory leak during long-polling Redis stream consumers in staging</p>
+<div class="flex items-center justify-between pt-space-xs mt-space-xs">
+<div class="flex items-center gap-1 text-error">
+<span class="material-symbols-outlined text-[14px]">priority_high</span>
+<span class="font-label-sm text-label-sm">Critical</span>
+</div>
+<div class="w-5 h-5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm flex items-center justify-center">?</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column: To Do (3) -->
+<div class="flex-shrink-0 w-80 flex flex-col gap-space-sm">
+<div class="flex items-center justify-between px-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">To Do</h3>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-ticket-key">3</span>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded hover:bg-surface-container">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Card 3 -->
+<div class="p-space-md rounded-lg bg-surface-container-lowest shadow-sm hover:shadow transition-shadow flex flex-col gap-space-xs group cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-ticket-key text-ticket-key text-primary">TKT-13</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed">Task</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-medium line-clamp-2">Synthesize GraphQL cache telemetry with Prometheus alerts</p>
+<div class="flex items-center justify-between pt-space-xs mt-space-xs">
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+<span class="font-label-sm text-label-sm">Medium</span>
+</div>
+<div class="w-5 h-5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm flex items-center justify-center">AR</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column: In Progress (Active Card Column) -->
+<div class="flex-shrink-0 w-80 flex flex-col gap-space-sm">
+<div class="flex items-center justify-between px-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">In Progress</h3>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-ticket-key">2</span>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded hover:bg-surface-container">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Active Drawer Card Reference -->
+<div class="p-space-md rounded-lg bg-surface-container-lowest shadow-md flex flex-col gap-space-xs relative overflow-hidden bg-gradient-to-r from-primary/5 via-transparent to-transparent">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="flex items-center justify-between pl-1">
+<span class="font-ticket-key text-ticket-key text-primary font-bold">TKT-14</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed">Task</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-semibold pl-1 line-clamp-2">Migrate CI pipelines from legacy runner to GitHub Actions</p>
+<div class="flex items-center justify-between pt-space-xs mt-space-xs pl-1">
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px] text-primary">schedule</span>
+<span class="font-label-sm text-label-sm">Medium</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-outline">chat_bubble</span>
+<span class="font-label-sm text-label-sm text-outline mr-2">2</span>
+<div class="w-5 h-5 rounded-full bg-primary-container text-on-primary-container font-label-sm text-label-sm flex items-center justify-center">SC</div>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="p-space-md rounded-lg bg-surface-container-lowest shadow-sm hover:shadow transition-shadow flex flex-col gap-space-xs group cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-ticket-key text-ticket-key text-primary">TKT-16</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant">Feature</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-medium line-clamp-2">Draft interactive SLA health monitor widgets for customer dashboard</p>
+<div class="flex items-center justify-between pt-space-xs mt-space-xs">
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>
+<span class="font-label-sm text-label-sm">High</span>
+</div>
+<div class="w-5 h-5 rounded-full bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm flex items-center justify-center">DK</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column: Review & QA (2) -->
+<div class="flex-shrink-0 w-80 flex flex-col gap-space-sm">
+<div class="flex items-center justify-between px-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Review</h3>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-ticket-key">1</span>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded hover:bg-surface-container">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Card 5 -->
+<div class="p-space-md rounded-lg bg-surface-container-lowest shadow-sm hover:shadow transition-shadow flex flex-col gap-space-xs group cursor-pointer">
+<div class="flex items-center justify-between">
+<span class="font-ticket-key text-ticket-key text-primary">TKT-07</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed">Task</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface font-medium line-clamp-2">Replace cookie parser middleware with lightweight crypto tokens</p>
+<div class="flex items-center justify-between pt-space-xs mt-space-xs">
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+<span class="font-label-sm text-label-sm">Medium</span>
+</div>
+<div class="w-5 h-5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm flex items-center justify-center">AR</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column: Done (6) -->
+<div class="flex-shrink-0 w-80 flex flex-col gap-space-sm opacity-70">
+<div class="flex items-center justify-between px-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-surface-dim"></span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Done</h3>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-ticket-key">6</span>
+</div>
+</div>
+<div class="flex flex-col gap-space-sm">
+<div class="p-space-md rounded-lg bg-surface-container-lowest shadow-sm flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-ticket-key text-ticket-key text-outline line-through">TKT-02</span>
+<span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant line-through">Patch OpenSSL vulnerability across worker fleet</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Soft Dimming Backdrop for Drawer (Board is softly dimmed behind) -->
+<div class="fixed inset-0 top-12 bg-on-surface/20 backdrop-blur-[2px] z-30 transition-opacity duration-300" id="boardBackdrop"></div>
+<!-- Ticket Detail Drawer (Side Drawer ~560px on right overlaying board) -->
+<aside class="fixed top-12 right-0 w-full sm:w-[560px] h-[calc(100vh-3rem)] bg-surface-container-lowest shadow-2xl z-40 flex flex-col overflow-y-auto transform transition-transform duration-300 ease-in-out" id="ticketDrawer">
+<!-- Drawer Header -->
+<div class="sticky top-0 bg-surface-container-lowest px-space-xl py-space-md flex items-center justify-between z-10 shadow-sm">
+<div class="flex items-center gap-space-sm">
+<span class="font-code-md text-ticket-key font-bold text-primary tracking-wider bg-primary-fixed px-2 py-0.5 rounded">TKT-14</span>
+<button class="flex items-center text-outline hover:text-on-surface p-1 rounded hover:bg-surface-container transition-colors" id="copyKeyBtn" title="Copy key">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+<span class="font-label-sm text-label-sm text-tertiary hidden" id="copiedTooltip">Copied!</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="p-1 text-outline hover:text-on-surface rounded hover:bg-surface-container transition-colors" title="Open full screen">
+<span class="material-symbols-outlined text-[20px]">open_in_new</span>
+</button>
+<button class="p-1 text-outline hover:text-on-surface rounded hover:bg-surface-container transition-colors" id="closeDrawerBtn" title="Close drawer">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+</div>
+<!-- Drawer Content Body -->
+<div class="p-space-xl flex flex-col gap-space-lg">
+<!-- Inline Editable Title -->
+<div class="group relative">
+<div class="flex items-start justify-between gap-space-sm">
+<input class="w-full font-headline-md text-headline-md text-on-surface font-semibold bg-transparent rounded p-1 hover:bg-surface-container-low focus:bg-surface-container-lowest focus:ring-1 focus:ring-primary outline-none transition-colors" id="ticketTitleInput" type="text" value="Migrate CI pipelines from legacy runner to GitHub Actions"/>
+<span class="material-symbols-outlined text-[18px] text-outline opacity-0 group-hover:opacity-100 transition-opacity mt-1">edit</span>
+</div>
+</div>
+<!-- Column Indicator (Read-only status chip + move note) -->
+<div class="flex items-center justify-between bg-surface-container-low p-space-sm rounded-lg">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-md text-label-md text-on-surface-variant">Column:</span>
+<span class="inline-flex items-center gap-1.5 px-space-sm py-0.5 rounded-full bg-primary-container text-on-primary font-label-md text-label-md">
+<span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+<span>In Progress</span>
+</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+<span>Column moves via board drag &amp; drop only</span>
+</span>
+</div>
+<!-- Editable Properties Grid -->
+<div class="bg-surface-container-low p-space-lg rounded-xl flex flex-col gap-space-md shadow-sm">
+<div class="flex items-center justify-between pb-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-bold">Properties</span>
+<div class="flex items-center gap-space-xs">
+<button class="px-space-sm py-0.5 font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded transition-colors" id="resetPropsBtn">Cancel</button>
+<button class="px-space-sm py-0.5 font-label-sm text-label-sm bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-sm" id="savePropsBtn">Save</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Property: Type -->
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-label-md text-on-surface-variant">Type</label>
+<div class="flex bg-surface-container p-0.5 rounded-lg" id="typeSegmented">
+<button class="type-opt flex-1 py-1 rounded-md text-center font-label-md text-label-md bg-surface-container-lowest text-on-surface shadow-sm font-semibold transition-all" data-val="Task" type="button">Task</button>
+<button class="type-opt flex-1 py-1 rounded-md text-center font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all" data-val="Bug" type="button">Bug</button>
+<button class="type-opt flex-1 py-1 rounded-md text-center font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all" data-val="Feature" type="button">Feature</button>
+</div>
+</div>
+<!-- Property: Priority -->
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-label-md text-on-surface-variant">Priority</label>
+<div class="flex bg-surface-container p-0.5 rounded-lg" id="prioritySegmented">
+<button class="prio-opt flex-1 py-1 rounded-md text-center font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all" data-val="Low" type="button">Low</button>
+<button class="prio-opt flex-1 py-1 rounded-md text-center font-label-sm text-label-sm bg-surface-container-lowest text-on-surface shadow-sm font-semibold transition-all" data-val="Medium" type="button">Medium</button>
+<button class="prio-opt flex-1 py-1 rounded-md text-center font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all" data-val="High" type="button">High</button>
+<button class="prio-opt flex-1 py-1 rounded-md text-center font-label-sm text-label-sm text-error hover:bg-error-container/40 transition-all" data-val="Critical" type="button">Crit</button>
+</div>
+</div>
+<!-- Property: Assignee -->
+<div class="flex flex-col gap-1 md:col-span-2">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md text-on-surface-variant">Assignee</label>
+<span class="font-body-sm text-body-sm text-outline">Plain text value</span>
+</div>
+<div class="relative flex items-center bg-surface-container-lowest rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-[18px] text-outline ml-space-sm">person</span>
+<input class="w-full py-1.5 px-space-sm bg-transparent outline-none font-body-md text-body-md text-on-surface" id="assigneeInput" type="text" value="Sam Chen"/>
+<button class="px-space-sm text-outline hover:text-on-surface transition-colors" id="clearAssigneeBtn" title="Clear to Unassigned" type="button">
+                ✕
+              </button>
+</div>
+</div>
+</div>
+<!-- Property: Description -->
+<div class="flex flex-col gap-1 pt-space-xs">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md text-on-surface-variant">Description</label>
+<span class="font-body-sm text-body-sm text-outline">Plain text</span>
+</div>
+<textarea class="w-full p-space-sm rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md outline-none focus:ring-1 focus:ring-primary shadow-sm resize-none" id="ticketDescriptionInput" rows="4">We need to sunset our self-hosted Jenkins runners and migrate all platform build and test pipelines to GitHub Actions. Ensure caching is properly configured.</textarea>
+<div class="flex justify-end gap-space-xs mt-space-xs">
+<button class="px-space-sm py-1 font-label-sm text-label-sm rounded text-on-surface-variant hover:bg-surface-container transition-colors" id="descCancelBtn">Cancel</button>
+<button class="px-space-md py-1 font-label-sm text-label-sm rounded bg-primary-container text-on-primary-container hover:bg-primary hover:text-on-primary transition-colors" id="descSaveBtn">Save description</button>
+</div>
+</div>
+</div>
+<!-- Metadata string -->
+<div class="px-space-xs flex items-center gap-space-xs text-outline font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[14px]">history</span>
+<span>Created Oct 20, 2026, 10:12 AM · Updated Oct 21, 2026, 02:45 PM</span>
+</div>
+<!-- Tab Navigation: Comments & History -->
+<div class="flex flex-col gap-space-md">
+<div class="flex items-center gap-space-md bg-surface-container-low p-1 rounded-lg">
+<button class="flex-1 py-1.5 rounded font-label-md text-label-md bg-surface-container-lowest text-on-surface shadow-sm font-semibold transition-all flex items-center justify-center gap-1.5" id="tabCommentsBtn">
+<span class="material-symbols-outlined text-[16px]">chat_bubble_outline</span>
+<span>Comments (2)</span>
+</button>
+<button class="flex-1 py-1.5 rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all flex items-center justify-center gap-1.5" id="tabHistoryBtn">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>History (3)</span>
+</button>
+</div>
+<!-- Tab 1: Comments Section -->
+<div class="flex flex-col gap-space-md" id="commentsPane">
+<!-- Comment 1 -->
+<div class="p-space-md bg-surface-container-low rounded-lg flex flex-col gap-space-xs shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-6 h-6 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm flex items-center justify-center">DK</div>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Danielle K.</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline">2h ago</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface pl-8">The base docker image is already prepared in the registry.</p>
+</div>
+<!-- Comment 2 -->
+<div class="p-space-md bg-surface-container-low rounded-lg flex flex-col gap-space-xs shadow-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm flex items-center justify-center">AR</div>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Alex Rivera</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline">45m ago</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface pl-8">Make sure to check secrets propagation in the new runner.</p>
+</div>
+<!-- Compose Comment Form -->
+<form class="mt-space-xs p-space-md bg-surface-container-lowest rounded-xl shadow flex flex-col gap-space-sm" id="commentForm" onsubmit="event.preventDefault();">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-bold">New Comment</span>
+<div class="flex flex-col gap-1">
+<input class="px-space-sm py-1.5 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm outline-none focus:ring-1 focus:ring-primary" id="commentAuthor" maxlength="100" placeholder="Your name (1-100 chars)" required="" type="text" value="Sam Chen"/>
+</div>
+<div class="flex flex-col gap-1">
+<textarea class="px-space-sm py-1.5 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm outline-none focus:ring-1 focus:ring-primary resize-none" id="commentBody" maxlength="5000" placeholder="Write a comment... (1-5000 chars)" required="" rows="3"></textarea>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-body-sm text-body-sm text-outline">Markdown supported</span>
+<button class="px-space-md py-1.5 rounded-lg bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-container transition-colors shadow-sm" id="postCommentBtn" type="button">
+                Add comment
+              </button>
+</div>
+</form>
+</div>
+<!-- Tab 2: History Section (Expanded Preview) -->
+<div class="flex flex-col gap-space-sm hidden" id="historyPane">
+<div class="p-space-sm rounded-lg bg-surface-container-low flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-[16px] text-primary mt-0.5">swap_horiz</span>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface font-medium">"In Progress" ← "To Do"</span>
+<span class="font-body-sm text-body-sm text-outline">Oct 21, 14:30 · Automated webhook</span>
+</div>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-[16px] text-tertiary mt-0.5">edit</span>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface font-medium">Assignee set to "Sam Chen"</span>
+<span class="font-body-sm text-body-sm text-outline">Oct 20, 11:05 · Danielle K.</span>
+</div>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-[16px] text-outline mt-0.5">add_circle</span>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface font-medium">"Created in To Do"</span>
+<span class="font-body-sm text-body-sm text-outline">Oct 20, 10:12 · Lead Architect</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- MODAL 1: "New Ticket" Dialog Overlay (Interactive preview) -->
+<div class="fixed inset-0 bg-on-surface/40 backdrop-blur-sm z-50 flex items-center justify-center p-margin hidden" id="newTicketModal">
+<div class="bg-surface-container-lowest w-full max-w-lg rounded-xl shadow-2xl p-space-xl flex flex-col gap-space-md animate-in fade-in zoom-in-95 duration-150">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs text-primary">
+<span class="material-symbols-outlined text-[20px]">assignment</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">New ticket</h2>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded hover:bg-surface-container" id="closeNewTicketBtn">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- General Error Banner Showcase -->
+<div class="p-space-sm rounded bg-error-container text-on-error-container flex items-start gap-space-xs text-body-sm font-body-sm" id="generalErrorBanner">
+<span class="material-symbols-outlined text-[16px] text-error mt-0.5">warning</span>
+<div class="flex flex-col">
+<span class="font-semibold text-error">Unable to create ticket</span>
+<span>Please resolve field errors below before resubmitting.</span>
+</div>
+</div>
+<form class="flex flex-col gap-space-md" id="createTicketForm" onsubmit="event.preventDefault();">
+<!-- Title Input with Error Validation State Showcase -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md text-on-surface font-semibold">Title <span class="text-error">*</span></label>
+<span class="font-body-sm text-body-sm text-outline">1-200 chars</span>
+</div>
+<input aria-invalid="true" class="px-space-sm py-2 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md outline-none ring-1 ring-error focus:ring-2 focus:ring-error transition-all" id="newTicketTitle" maxlength="200" placeholder="e.g. Implement resilient circuit breaker on Auth API" type="text"/>
+<!-- Validation error pattern -->
+<div class="flex items-center gap-1 text-error text-label-sm font-label-sm mt-0.5">
+<span class="material-symbols-outlined text-[14px]">error</span>
+<span>Title is required</span>
+</div>
+</div>
+<!-- Description Textarea (Optional) -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md text-on-surface-variant">Description <span class="text-outline text-body-sm">(optional)</span></label>
+</div>
+<textarea class="px-space-sm py-2 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md outline-none focus:ring-1 focus:ring-primary resize-none" placeholder="Add context, acceptance criteria or reproduction steps..." rows="3"></textarea>
+</div>
+<!-- Type Selector & Priority in 2 Cols -->
+<div class="grid grid-cols-2 gap-space-md">
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-label-md text-on-surface font-medium">Type</label>
+<select class="px-space-sm py-2 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm outline-none cursor-pointer">
+<option selected="" value="Task">Task (default)</option>
+<option value="Bug">Bug</option>
+<option value="Feature">Feature</option>
+</select>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-label-md text-on-surface font-medium">Priority</label>
+<select class="px-space-sm py-2 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm outline-none cursor-pointer">
+<option value="Low">Low</option>
+<option selected="" value="Medium">Medium (default)</option>
+<option value="High">High</option>
+<option value="Critical">Critical</option>
+</select>
+</div>
+</div>
+<!-- Assignee Free Text Input -->
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-label-md text-on-surface font-medium">Assignee <span class="text-outline text-body-sm">(optional free text)</span></label>
+<input class="px-space-sm py-2 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md outline-none focus:ring-1 focus:ring-primary" placeholder="e.g. Danielle K. or leave unassigned" type="text"/>
+</div>
+<!-- Helper Note -->
+<div class="flex items-center gap-1.5 p-space-xs rounded bg-surface-container-low text-outline font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-outline">info</span>
+<span>The ticket will be added to the bottom of To Do.</span>
+</div>
+<!-- Dialog Footer Actions -->
+<div class="flex items-center justify-end gap-space-sm pt-space-xs">
+<button class="px-space-md py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container font-label-md text-label-md transition-colors" id="cancelNewTicketBtn" type="button">
+            Cancel
+          </button>
+<button class="px-space-lg py-1.5 rounded-lg bg-primary text-on-primary hover:bg-primary-container font-label-md text-label-md shadow-sm transition-colors" type="submit">
+            Create ticket
+          </button>
+</div>
+</form>
+</div>
+</div>
+<!-- MODAL 2: "New Board" Modal Overlay Showcase -->
+<div class="fixed inset-0 bg-on-surface/40 backdrop-blur-sm z-50 flex items-center justify-center p-margin hidden" id="newBoardModal">
+<div class="bg-surface-container-lowest w-full max-w-md rounded-xl shadow-2xl p-space-xl flex flex-col gap-space-md animate-in fade-in zoom-in-95 duration-150">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs text-primary">
+<span class="material-symbols-outlined text-[20px]">view_kanban</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Create New Board</h2>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded hover:bg-surface-container" id="closeNewBoardBtn">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<div class="flex flex-col gap-space-md">
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-label-md text-on-surface font-semibold">Board Name <span class="text-error">*</span></label>
+<input class="px-space-sm py-2 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md outline-none focus:ring-1 focus:ring-primary" placeholder="e.g. Platform Engineering Q4" type="text"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-label-md text-on-surface font-medium">Issue Key Prefix</label>
+<div class="flex items-center gap-2">
+<input class="w-24 px-space-sm py-2 uppercase font-code-md text-code-md rounded-lg bg-surface-container-low text-on-surface outline-none focus:ring-1 focus:ring-primary" type="text" value="ENG"/>
+<span class="font-body-sm text-body-sm text-outline">Will prefix all issues (e.g. ENG-1)</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-label-md text-on-surface font-medium">Default Columns</label>
+<div class="p-space-sm bg-surface-container-low rounded-lg text-body-sm font-body-sm text-on-surface-variant flex flex-wrap gap-1">
+<span class="px-2 py-0.5 rounded bg-surface-container-lowest shadow-xs">Backlog</span>
+<span>→</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-lowest shadow-xs">To Do</span>
+<span>→</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-lowest shadow-xs">In Progress</span>
+<span>→</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-lowest shadow-xs">Review</span>
+<span>→</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-lowest shadow-xs">Done</span>
+</div>
+</div>
+<div class="flex items-center justify-end gap-space-sm pt-space-xs">
+<button class="px-space-md py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container font-label-md text-label-md transition-colors" id="cancelNewBoardBtn" type="button">
+            Cancel
+          </button>
+<button class="px-space-lg py-1.5 rounded-lg bg-primary text-on-primary hover:bg-primary-container font-label-md text-label-md shadow-sm transition-colors" id="confirmNewBoardBtn" type="button">
+            Create board
+          </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // DOM Elements
+  const drawer = document.getElementById('ticketDrawer');
+  const backdrop = document.getElementById('boardBackdrop');
+  const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+  const copyKeyBtn = document.getElementById('copyKeyBtn');
+  const copiedTooltip = document.getElementById('copiedTooltip');
+  const clearAssigneeBtn = document.getElementById('clearAssigneeBtn');
+  const assigneeInput = document.getElementById('assigneeInput');
+
+  // Tabs
+  const tabCommentsBtn = document.getElementById('tabCommentsBtn');
+  const tabHistoryBtn = document.getElementById('tabHistoryBtn');
+  const commentsPane = document.getElementById('commentsPane');
+  const historyPane = document.getElementById('historyPane');
+
+  // Modals
+  const newTicketModal = document.getElementById('newTicketModal');
+  const openNewTicketModalBtn = document.getElementById('openNewTicketModalBtn');
+  const closeNewTicketBtn = document.getElementById('closeNewTicketBtn');
+  const cancelNewTicketBtn = document.getElementById('cancelNewTicketBtn');
+
+  const newBoardModal = document.getElementById('newBoardModal');
+  const openNewBoardModalBtn = document.getElementById('openNewBoardModalBtn');
+  const closeNewBoardBtn = document.getElementById('closeNewBoardBtn');
+  const cancelNewBoardBtn = document.getElementById('cancelNewBoardBtn');
+  const confirmNewBoardBtn = document.getElementById('confirmNewBoardBtn');
+
+  // Drawer Toggle behavior
+  function closeDrawer() {
+    drawer.classList.add('translate-x-full');
+    backdrop.classList.add('opacity-0', 'pointer-events-none');
+  }
+
+  function openDrawer() {
+    drawer.classList.remove('translate-x-full');
+    backdrop.classList.remove('opacity-0', 'pointer-events-none');
+  }
+
+  closeDrawerBtn?.addEventListener('click', closeDrawer);
+  backdrop?.addEventListener('click', closeDrawer);
+
+  // Copy Ticket Key
+  copyKeyBtn?.addEventListener('click', () => {
+    navigator.clipboard?.writeText('TKT-14');
+    copiedTooltip?.classList.remove('hidden');
+    setTimeout(() => copiedTooltip?.classList.add('hidden'), 1800);
+  });
+
+  // Assignee clear to "Unassigned"
+  clearAssigneeBtn?.addEventListener('click', () => {
+    assigneeInput.value = 'Unassigned';
+    assigneeInput.focus();
+  });
+
+  // Segmented Type Buttons
+  const typeButtons = document.querySelectorAll('#typeSegmented .type-opt');
+  typeButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      typeButtons.forEach(b => {
+        b.classList.remove('bg-surface-container-lowest', 'text-on-surface', 'shadow-sm', 'font-semibold');
+        b.classList.add('text-on-surface-variant');
+      });
+      btn.classList.add('bg-surface-container-lowest', 'text-on-surface', 'shadow-sm', 'font-semibold');
+      btn.classList.remove('text-on-surface-variant');
+    });
+  });
+
+  // Segmented Priority Buttons
+  const prioButtons = document.querySelectorAll('#prioritySegmented .prio-opt');
+  prioButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      prioButtons.forEach(b => {
+        b.classList.remove('bg-surface-container-lowest', 'text-on-surface', 'shadow-sm', 'font-semibold');
+        b.classList.add('text-on-surface-variant');
+      });
+      btn.classList.add('bg-surface-container-lowest', 'text-on-surface', 'shadow-sm', 'font-semibold');
+      btn.classList.remove('text-on-surface-variant');
+    });
+  });
+
+  // Switch Drawer Tabs
+  tabCommentsBtn?.addEventListener('click', () => {
+    tabCommentsBtn.classList.add('bg-surface-container-lowest', 'text-on-surface', 'shadow-sm', 'font-semibold');
+    tabCommentsBtn.classList.remove('text-on-surface-variant');
+    tabHistoryBtn.classList.remove('bg-surface-container-lowest', 'text-on-surface', 'shadow-sm', 'font-semibold');
+    tabHistoryBtn.classList.add('text-on-surface-variant');
+    commentsPane?.classList.remove('hidden');
+    historyPane?.classList.add('hidden');
+  });
+
+  tabHistoryBtn?.addEventListener('click', () => {
+    tabHistoryBtn.classList.add('bg-surface-container-lowest', 'text-on-surface', 'shadow-sm', 'font-semibold');
+    tabHistoryBtn.classList.remove('text-on-surface-variant');
+    tabCommentsBtn.classList.remove('bg-surface-container-lowest', 'text-on-surface', 'shadow-sm', 'font-semibold');
+    tabCommentsBtn.classList.add('text-on-surface-variant');
+    historyPane?.classList.remove('hidden');
+    commentsPane?.classList.add('hidden');
+  });
+
+  // Modal Triggers: New Ticket
+  openNewTicketModalBtn?.addEventListener('click', () => {
+    newTicketModal?.classList.remove('hidden');
+  });
+  closeNewTicketBtn?.addEventListener('click', () => {
+    newTicketModal?.classList.add('hidden');
+  });
+  cancelNewTicketBtn?.addEventListener('click', () => {
+    newTicketModal?.classList.add('hidden');
+  });
+
+  // Modal Triggers: New Board
+  openNewBoardModalBtn?.addEventListener('click', () => {
+    newBoardModal?.classList.remove('hidden');
+  });
+  closeNewBoardBtn?.addEventListener('click', () => {
+    newBoardModal?.classList.add('hidden');
+  });
+  cancelNewBoardBtn?.addEventListener('click', () => {
+    newBoardModal?.classList.add('hidden');
+  });
+  confirmNewBoardBtn?.addEventListener('click', () => {
+    newBoardModal?.classList.add('hidden');
+  });
+
+  // Re-open drawer when clicking the active card in In-Progress column
+  document.querySelector('.border-l-primary, .bg-primary\\/5')?.parentElement?.addEventListener('click', () => {
+    openDrawer();
+  });
+</script></main></body></html>

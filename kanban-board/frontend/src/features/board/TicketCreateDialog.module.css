@@ -1,0 +1,17 @@
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+}
+
+.note {
+  font-size: var(--text-body-sm-size);
+  line-height: var(--text-body-sm-line);
+  color: var(--color-on-surface-variant);
+}
+
+@media (max-width: 639px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}

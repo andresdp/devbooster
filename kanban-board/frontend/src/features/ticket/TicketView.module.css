@@ -1,0 +1,60 @@
+.view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.headRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--text-headline-md-size);
+  line-height: var(--text-headline-md-line);
+  font-weight: var(--text-headline-md-weight);
+  letter-spacing: var(--text-headline-md-tracking);
+  overflow-wrap: anywhere;
+}
+
+.badges {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.description {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.muted {
+  color: var(--color-on-surface-variant);
+  font-style: italic;
+}
+
+.assignee {
+  font-weight: 500;
+}
+
+.columnRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.columnChip {
+  padding: 2px var(--space-sm);
+  border-radius: var(--radius-full);
+  background: var(--color-surface-container-high);
+  font-size: var(--text-label-md-size);
+  font-weight: var(--text-label-md-weight);
+}
+
+.meta {
+  font-size: var(--text-body-sm-size);
+  color: var(--color-on-surface-variant);
+}
