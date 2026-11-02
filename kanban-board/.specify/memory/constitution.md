@@ -1,21 +1,19 @@
 <!--
 Sync Impact Report
-- Version change: 1.0.0 → 1.1.0 (MINOR: frontend scope added to existing principles, new
-  Frontend Constraints guidance; no backend rule removed or weakened)
+- Version change: 1.1.0 → 1.2.0 (MINOR: materially expanded guidance in Principle IV; no rule
+  removed or weakened)
 - Modified principles:
-  - I. Python + FastAPI Backend with Pydantic v2 → I. Python + FastAPI Backend with Pydantic v2
-    (backend/ only): scoped explicitly to backend/
-  - II. OpenAPI Contract Is the Source of Truth: added frontend obligation to generate API
-    types from the committed contract, never hand-write them
-  - IV. Test-First with pytest (NON-NEGOTIABLE) → IV. Test-First (NON-NEGOTIABLE): pytest
-    retained for backend/; Vitest + Testing Library added for frontend/
-  - V. Simplicity: stated to apply unchanged to frontend/ (including no external infrastructure)
-- Added sections: "Frontend Constraints" bullets inside Repository & Technology Constraints
-  (frontend lives in frontend/, TypeScript + React + Vite); frontend quality gates in
-  Development Workflow & Quality Gates
+  - IV. Test-First (NON-NEGOTIABLE): added an `e2e/` bullet. End-to-end checks cover existing
+    behaviour, so each check MUST be seen to fail (wrong expectation or broken flow) before it
+    counts as done, MUST use an isolated database unless pointed at a dedicated test
+    environment, and MUST stay outside the Vitest and pytest suites
+- Added sections: none
 - Removed sections: none
+- Rationale: feature 003-e2e-user-flows adds a test-only `e2e/` project; its plan had to
+  reinterpret Principle IV (speckit-analyze finding C4)
+- Dependent artifacts: specs/003-e2e-user-flows/plan.md Constitution Check row IV updated to
+  cite the new bullet; templates read the constitution at runtime (no change)
 - Follow-up TODOs: none
-- Deferred non-governance intents: none (frontend implementation is not requested here)
 -->
 # Kanban Board Constitution
 
@@ -58,6 +56,11 @@ Tests MUST be written before the implementation they cover, and MUST be seen to 
   states, written from the user's perspective (rendered output and interactions, not
   implementation internals). Tests MUST NOT depend on a running backend; API calls MUST be
   mocked at the boundary defined by the generated contract types.
+- `e2e/`: end-to-end checks cover behaviour that already exists in `backend/` and `frontend/`,
+  so "before the implementation" does not apply. Each check MUST instead be seen to fail,
+  against a deliberately wrong expectation or a deliberately broken flow, before it counts as
+  done. Checks MUST run against an isolated database unless explicitly pointed at a dedicated
+  test environment, and MUST stay outside the Vitest and pytest suites.
 
 ### V. Simplicity
 Prefer the simplest solution that satisfies the spec. Dependencies MUST be kept minimal and each
@@ -123,4 +126,4 @@ removals or redefinitions of principles, MINOR for new principles or materially 
 guidance, PATCH for clarifications and wording. Every plan and review MUST verify compliance
 with this constitution, and unjustified complexity MUST be rejected.
 
-**Version**: 1.1.0 | **Ratified**: 2026-10-20 | **Last Amended**: 2026-10-25
+**Version**: 1.2.0 | **Ratified**: 2026-10-20 | **Last Amended**: 2026-11-01
