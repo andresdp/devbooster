@@ -1,0 +1,33 @@
+# E2E override (spec 004, research R10). Never auto-loaded: use it only together with compose.yaml
+# and a THROWAWAY project name, as scripts/e2e-docker.sh does:
+#
+#   docker compose -p kanban-e2e -f compose.yaml -f compose.e2e.yaml ...
+#
+# Requires Compose >= 2.24 (for `!reset`).
+services:
+  backend:
+    environment:
+      # Same as the suite's managed mode: start from an empty store.
+      SEED_ON_STARTUP: "false"
+
+  frontend:
+    # No host port, so the run never conflicts with your own app on 8080.
+    ports: !reset []
+
+  e2e:
+    build:
+      context: ./e2e
+    image: kanban-e2e:${KANBAN_IMAGE_TAG:-local}
+    environment:
+      # External mode of the suite; the API is same-origin behind nginx.
+      BASE_URL: "http://frontend:8080"
+      API_URL: "http://frontend:8080"
+      # Enables Playwright's forbidOnly.
+      CI: "1"
+    depends_on:
+      frontend:
+        condition: service_healthy
+    # Recommended by Playwright for Chromium in Docker.
+    ipc: host
+    init: true
+    restart: "no"

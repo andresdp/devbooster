@@ -1,0 +1,16 @@
+# Deny list (research R12).
+.git
+**/.DS_Store
+**/.env
+**/.env.*
+**/.npmrc
+*.pem
+Dockerfile
+.dockerignore
+*.md
+node_modules/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+playwright/.auth/

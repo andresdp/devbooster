@@ -19,6 +19,14 @@ duplicate it. The seed can also be run by hand (it is a no-op once any board exi
 uv run python -m app.seed
 ```
 
+## Running in Docker (optional)
+
+The whole app can also run in containers; see "Run with Docker" in the [root README](../README.md).
+The container uses its own database in the `kanban-data` Docker volume, never `backend/kanban.db`.
+The image sets `DATABASE_URL=sqlite:////data/kanban.db`, `CORS_ORIGINS` empty (the browser reaches the
+API on the same origin through nginx) and `SEED_ON_STARTUP=true`; Compose overrides them with the
+`KANBAN_*` variables. Every command in this README is unchanged and needs no Docker.
+
 ## Endpoints
 
 | Method | Path | Purpose |

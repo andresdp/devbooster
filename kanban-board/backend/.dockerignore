@@ -1,0 +1,17 @@
+# Deny list (research R12). Only app/, pyproject.toml and uv.lock are needed in the image build.
+.git
+**/.DS_Store
+**/.env
+**/.env.*
+**/.npmrc
+*.pem
+Dockerfile
+.dockerignore
+*.md
+.venv/
+**/__pycache__/
+.pytest_cache/
+.ruff_cache/
+kanban.db*
+tests/
+scripts/
