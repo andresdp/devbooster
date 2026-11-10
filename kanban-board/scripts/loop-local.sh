@@ -319,7 +319,8 @@ REVISIONES=0
 while true; do
   PASO="4/8 Checkpoint humano"
   [ -f "$SPEC" ] || morir "Desapareció ${SPEC}."
-  ACLARACIONES="$(grep -o '\[NEEDS CLARIFICATION' "$SPEC" 2>/dev/null | wc -l | tr -d ' ')"
+  # grep sale con 1 si no hay coincidencias: sin el "|| true", pipefail + set -e cortan el script.
+  ACLARACIONES="$({ grep -o '\[NEEDS CLARIFICATION' "$SPEC" 2>/dev/null || true; } | wc -l | tr -d ' ')"
   printf '\n'
   info "Spec: ${ROOT}/${SPEC}"
   if [ "$ACLARACIONES" -gt 0 ]; then
